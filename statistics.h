@@ -35,3 +35,11 @@ double Variance(const std::vector<double>& v){
 double StandardDeviation(const std::vector<double>& v){
     return sqrt(Variance(v));
 }
+
+double CorrelationCoefficient(const std::vector<double>& vx, const std::vector<double>& vy){
+    double Xavg = Average(vx);
+    double Yavg = Average(vy);
+    double deltaSum = 0.0;
+    for(int i = 0; i < vx.size(); ++i) deltaSum += (vx[i] - Xavg) * (vy[i] - Yavg);
+    return deltaSum / sqrt(Variance(vx) * Variance(vy));
+}
