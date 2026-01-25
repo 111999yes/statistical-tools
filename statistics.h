@@ -2,21 +2,41 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 
 class Line{
 public:
-    Line(double _m, double _b) : slope(_m), yIntercept(_b) {}
+    
+    Line(double _m, std::pair<double, double> _avgPoint) : slope(_m), avgPoint(_avgPoint) {}
 
     friend std::ostream& operator<<(std::ostream& os, const Line& l){
-        os << "y = ";
-        os << l.slope << "x + ";
-        os << l.yIntercept; 
+        const double eps = 1e-8;
+        double x0 = l.avgPoint.first;
+        double y0 = l.avgPoint.second;
+        double m = l.slope;
+        os << "y";
+        if(std::abs(y0) > eps){
+            os << ((y0 > 0) ? " - " : " + ") << std::abs(y0);
+        }
+
+        os << " = ";
+
+        if(std::abs(m - 1.0) < eps) {}
+        else if(std::abs(m + 1.0) < eps) {os << "-";}
+        else {os << m;}
+
+        os << "(x";
+        if(std::abs(x0) > eps){
+            os << ((x0 > 0) ? " - " : " + ") << std::abs(x0);
+        }
+        os << ")";
+
         return os;
     }
 
 private:
     double slope;
-    double yIntercept;
+    std::pair<double, double> avgPoint;
 };
 
 double Average(const std::vector<double>& v){
@@ -48,3 +68,6 @@ double CorrelationCoefficient(const std::vector<double>& vx, const std::vector<d
     return Covariance(vx, vy) / sqrt(Variance(vx) * Variance(vy));
 }
 
+Line RegressionLine(const std::vector<double>& vx, const std::vector<double>& vy){
+    
+}
