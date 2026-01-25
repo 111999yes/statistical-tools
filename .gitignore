@@ -1,2 +1,5 @@
 #execute file
 *.out
+
+#text file
+*.txt
