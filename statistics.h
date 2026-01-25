@@ -69,5 +69,8 @@ double CorrelationCoefficient(const std::vector<double>& vx, const std::vector<d
 }
 
 Line RegressionLine(const std::vector<double>& vx, const std::vector<double>& vy){
-    
+    std::pair<double, double> avgPoint = {Average(vx), Average(vy)};
+    double slope = Covariance(vx, vy) / Variance(vx);
+    Line regressionLine(slope, avgPoint);
+    return regressionLine;
 }
