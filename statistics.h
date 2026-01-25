@@ -84,3 +84,23 @@ Line RegressionLine(const std::vector<double>& vx, const std::vector<double>& vy
     Line regressionLine(slope, avgPoint);
     return regressionLine;
 }
+
+double Residual(double x, double y, const Line& line){
+    return y - line.Estimate(x);
+}
+
+double ResidualSumSquares(const std::vector<double>& vx, const std::vector<double>& vy){
+    Line reLine = RegressionLine(vx, vy);
+    return ResidualSumSquares(vx, vy, reLine);
+}
+
+double ResidualSumSquares(const std::vector<double>& vx, const std::vector<double>& vy, const Line& reLine){
+    if(vx.empty() || vy.empty()) throw std::invalid_argument("Vector is empty");
+    if(vx.size() != vy.size()) throw std::invalid_argument("Vector size mismatch");
+    double RSS = 0.0;
+    for(int i = 0; i < vx.size(); ++i){
+        double error = Residual(vx[i], vy[i], reLine);
+        RSS += error * error;
+    }
+    return RSS;
+}

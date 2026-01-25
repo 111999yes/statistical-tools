@@ -8,7 +8,9 @@ enum MODE{POINT_SLOPE_FORM, SLOPE_INTERCEPT_FORM};
 class Line{
 public:
     
+    Line() {}
     Line(double _m, std::pair<double, double> _avgPoint) : slope(_m), avgPoint(_avgPoint) {}
+    Line(const Line& l) : slope(l.slope), avgPoint(l.avgPoint) {}
 
     void printLine(std::ostream& os, MODE mode) const {
         if(mode == POINT_SLOPE_FORM) os << *this;
@@ -16,6 +18,10 @@ public:
             Line result(slope, {0, avgPoint.second - slope * avgPoint.first});
             os << result;
         }
+    }
+
+    double Estimate(const double x) const {
+        return avgPoint.second + slope * (x - avgPoint.first);
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Line& l){
