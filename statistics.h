@@ -65,7 +65,7 @@ double Covariance(const std::vector<double>& vx, const std::vector<double>& vy){
 }
 
 double CorrelationCoefficient(const std::vector<double>& vx, const std::vector<double>& vy){
-    return Covariance(vx, vy) / sqrt(Variance(vx) * Variance(vy));
+    return Covariance(vx, vy) / (sqrt(Variance(vx) * Variance(vy)) * vx.size());
 }
 
 Line RegressionLine(const std::vector<double>& vx, const std::vector<double>& vy){
