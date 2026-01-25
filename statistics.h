@@ -2,8 +2,40 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
 #include "Line.h"
+
+double Minimum(const std::vector<double>& v){
+    if(v.empty()) throw std::invalid_argument("The vector is empty");
+    double minimum = v[0];
+    for(int i = 0; i < v.size(); ++i){
+        minimum = std::min(minimum, v[i]);
+    }
+    return minimum;
+}
+
+double Maximum(const std::vector<double>& v){
+    if(v.empty()) throw std::invalid_argument("The vector is empty");
+    double maximum = v[0];
+    for(int i = 0; i < v.size(); ++i){
+        maximum = std::max(maximum, v[i]);
+    }
+    return maximum;
+}
+
+double Range(const std::vector<double>& v){
+    return Maximum(v) - Minimum(v);
+}
+
+double Median(std::vector<double> v){
+    if(v.empty()) throw std::invalid_argument("The vector is empty");
+    std::sort(v.begin(), v.end());
+    int size = v.size();
+    if(size % 2 == 1) return v[size / 2];
+    return (v[size / 2 - 1] + v[size / 2]) / 2.0;
+
+}
 
 double Average(const std::vector<double>& v){
     if(v.empty()) throw std::invalid_argument("Vector is empty");
