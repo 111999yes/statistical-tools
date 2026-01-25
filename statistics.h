@@ -105,8 +105,17 @@ double ResidualSumSquares(const std::vector<double>& vx, const std::vector<doubl
     return RSS;
 }
 
-double StandardUncertaintyA(const std::vector<double>& v, int sampleNumber){
-    return StandardDeviation(v) / sqrt(sampleNumber);
+double StandardUncertaintyA(const std::vector<double>& v){
+    if(v.empty()) throw std::invalid_argument("Vector is empty");
+    return StandardDeviation(v) / sqrt(v.size());
+}
+
+double RootMeanSquareError(const std::vector<double> vx, const std::vector<double> vy, const Line& reLine){
+    return sqrt(ResidualSumSquares(vx, vy, reLine) / vx.size());
+}
+
+double RootMeanSquareError(const std::vector<double> vx, const std::vector<double> vy){
+    return sqrt(ResidualSumSquares(vx, vy) / vx.size());
 }
 
 double CoefficientOfDetermination_RSquare(const std::vector<double>& vx, const std::vector<double>& vy){
