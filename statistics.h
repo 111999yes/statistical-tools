@@ -104,3 +104,12 @@ double ResidualSumSquares(const std::vector<double>& vx, const std::vector<doubl
     }
     return RSS;
 }
+
+double StandardUncertaintyA(const std::vector<double>& v, int sampleNumber){
+    return StandardDeviation(v) / sqrt(sampleNumber);
+}
+
+double CoefficientOfDetermination_RSquare(const std::vector<double>& vx, const std::vector<double>& vy){
+    double R = CorrelationCoefficient(vx, vy);
+    return R * R;
+}
