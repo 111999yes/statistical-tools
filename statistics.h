@@ -9,7 +9,7 @@
 double Minimum(const std::vector<double>& v){
     if(v.empty()) throw std::invalid_argument("The vector is empty");
     double minimum = v[0];
-    for(int i = 0; i < v.size(); ++i){
+    for(size_t i = 0; i < v.size(); ++i){
         minimum = std::min(minimum, v[i]);
     }
     return minimum;
@@ -18,7 +18,7 @@ double Minimum(const std::vector<double>& v){
 double Maximum(const std::vector<double>& v){
     if(v.empty()) throw std::invalid_argument("The vector is empty");
     double maximum = v[0];
-    for(int i = 0; i < v.size(); ++i){
+    for(size_t i = 0; i < v.size(); ++i){
         maximum = std::max(maximum, v[i]);
     }
     return maximum;
@@ -40,14 +40,14 @@ double Median(std::vector<double> v){
 double Average(const std::vector<double>& v){
     if(v.empty()) throw std::invalid_argument("Vector is empty");
     double sum = 0.0;
-    for(int i = 0; i < v.size(); ++i) sum += v[i];
+    for(size_t i = 0; i < v.size(); ++i) sum += v[i];
     return sum / (double)v.size();
 }
 
 double Variance(const std::vector<double>& v){
     double deltaSum = 0.0;
     double avg = Average(v);
-    for(int i = 0; i < v.size(); ++i) deltaSum += (v[i] - avg) * (v[i] - avg);
+    for(size_t i = 0; i < v.size(); ++i) deltaSum += (v[i] - avg) * (v[i] - avg);
     return deltaSum / (double)v.size();
 }
 
@@ -60,7 +60,7 @@ double Covariance(const std::vector<double>& vx, const std::vector<double>& vy){
     double Xavg = Average(vx);
     double Yavg = Average(vy);
     double deltaSum = 0.0;
-    for(int i = 0; i < vx.size(); ++i) deltaSum += (vx[i] - Xavg) * (vy[i] - Yavg);
+    for(size_t i = 0; i < vx.size(); ++i) deltaSum += (vx[i] - Xavg) * (vy[i] - Yavg);
     return deltaSum / (double)vx.size();
 }
 
@@ -98,7 +98,7 @@ double ResidualSumSquares(const std::vector<double>& vx, const std::vector<doubl
     if(vx.empty() || vy.empty()) throw std::invalid_argument("Vector is empty");
     if(vx.size() != vy.size()) throw std::invalid_argument("Vector size mismatch");
     double RSS = 0.0;
-    for(int i = 0; i < vx.size(); ++i){
+    for(size_t i = 0; i < vx.size(); ++i){
         double error = Residual(vx[i], vy[i], reLine);
         RSS += error * error;
     }
