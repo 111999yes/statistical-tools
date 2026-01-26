@@ -29,12 +29,14 @@ public:
             os << "Average : {" << sta.Avg[0] << ", " << sta.Avg[1] << "}\n";
             os << "Variance : {" << sta.Var[0] << ", " << sta.Var[1] << "}\n";
             os << "Standard Deviation : {" << sta.SD[0] << ", " << sta.SD[1] << "}\n";
-            os << "Covariance" << sta.coVar << "\n";
-            os << "Correlation Coefficient" << sta.relCoef << "\n";
-            os << "RSS" << sta.RSS << "\n";
-            os << "RMSE" << sta.RMSE << "\n";
-            os << "R^2" << sta.RSquare << "\n";
-            os << "Regression Line" << sta.reLine;
+            os << "Covariance : " << sta.coVar << "\n";
+            os << "Correlation Coefficient : " << sta.relCoef << "\n";
+            os << "RSS : " << sta.RSS << "\n";
+            os << "RMSE : " << sta.RMSE << "\n";
+            os << "R^2 : " << sta.RSquare << "\n";
+            os << "Regression Line : " << sta.reLine;
+            os << " => ";
+            sta.reLine.printLine(os, SLOPE_INTERCEPT_FORM);
         }
         return os;
     }
@@ -87,8 +89,8 @@ public:
         statis.minimum[1] = Minimum(oriDataY);
         statis.maximum[0] = Maximum(oriDataX);
         statis.maximum[1] = Maximum(oriDataY);
-        statis.range[0] = statis.maximum[0] = statis.minimum[0];
-        statis.range[1] = statis.maximum[1] = statis.minimum[1];
+        statis.range[0] = Range(oriDataX);
+        statis.range[1] = Range(oriDataY);
         statis.median[0] = Median(oriDataX);
         statis.median[1] = Median(oriDataY);
         statis.Avg[0] = Average(oriDataX);

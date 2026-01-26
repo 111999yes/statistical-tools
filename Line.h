@@ -15,8 +15,13 @@ public:
     void printLine(std::ostream& os, MODE mode) const {
         if(mode == POINT_SLOPE_FORM) os << *this;
         else{
-            Line result(slope, {0, avgPoint.second - slope * avgPoint.first});
-            os << result;
+            const double eps = 1e-8;
+            double intercept = (avgPoint.first * slope - avgPoint.second);
+            os << "y = ";
+            os << slope << "x ";
+            if(std::abs(intercept) > eps){
+                os << ((intercept > 0) ? "+ ":"- ") << std::abs(intercept);
+            }
         }
     }
 

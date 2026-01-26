@@ -89,11 +89,6 @@ double Residual(double x, double y, const Line& line){
     return y - line.Estimate(x);
 }
 
-double ResidualSumSquares(const std::vector<double>& vx, const std::vector<double>& vy){
-    Line reLine = RegressionLine(vx, vy);
-    return ResidualSumSquares(vx, vy, reLine);
-}
-
 double ResidualSumSquares(const std::vector<double>& vx, const std::vector<double>& vy, const Line& reLine){
     if(vx.empty() || vy.empty()) throw std::invalid_argument("Vector is empty");
     if(vx.size() != vy.size()) throw std::invalid_argument("Vector size mismatch");
@@ -103,6 +98,11 @@ double ResidualSumSquares(const std::vector<double>& vx, const std::vector<doubl
         RSS += error * error;
     }
     return RSS;
+}
+
+double ResidualSumSquares(const std::vector<double>& vx, const std::vector<double>& vy){
+    Line reLine = RegressionLine(vx, vy);
+    return ResidualSumSquares(vx, vy, reLine);
 }
 
 double StandardUncertaintyA(const std::vector<double>& v){
