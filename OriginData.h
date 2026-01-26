@@ -26,20 +26,6 @@ public:
         return oriDataY.size();
     }
 
-    OriginData& operator=(const OriginData& d){
-        if(this == &d) return *this;
-        numberOfVariable = d.numberOfVariable;
-        this->oriDataX.clear();
-        this->oriDataY.clear();
-        for(int i = 0; i < d.oriDataY.size(); ++i){
-            this->oriDataY.push_back(d.oriDataY[i]);
-        }
-        for(int i = 0; i < d.oriDataX.size(); ++i){
-            this->oriDataX.push_back(d.oriDataX[i]);
-        }
-        return *this;
-    }
-
     friend std::istream& operator>>(std::istream& is, OriginData& d){
         if(d.numberOfVariable == 1){
             double val;
