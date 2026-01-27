@@ -16,5 +16,6 @@ enum COMMAND{
     PRINT_R2,
     PRINT_RSS,
     PRINT_RMSE,
+    NUMBER,
     UNDEFINED
 };

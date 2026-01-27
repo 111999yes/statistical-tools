@@ -25,6 +25,7 @@ COMMAND Parser(const std::string& inputString){
     if(cmd == "!PRINTR2") return PRINT_R2;
     if(cmd == "!PRINTRSS") return PRINT_RSS;
     if(cmd == "!PRINTRMSE") return PRINT_RMSE;
+    if(cmd[0] == '-' || (cmd[0] >= '0' && cmd[0] <= '9')) return NUMBER;
     return UNDEFINED;
 
 }
