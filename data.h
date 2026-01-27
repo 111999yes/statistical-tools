@@ -1,8 +1,7 @@
 #pragma once
 #include <cassert>
 
-#include "StatisticsData.h"
-
+#include "statisticsData.h"
 
 
 class Data{
