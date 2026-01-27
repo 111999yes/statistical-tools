@@ -3,7 +3,7 @@
 #include <utility>
 #include <cmath>
 
-enum MODE{POINT_SLOPE_FORM, SLOPE_INTERCEPT_FORM};
+#include "type.h"
 
 class Line{
 public:

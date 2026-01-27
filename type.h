@@ -1,0 +1,20 @@
+#pragma once
+
+enum MODE{
+    POINT_SLOPE_FORM,
+    SLOPE_INTERCEPT_FORM
+};
+
+enum COMMAND{
+    HELP,
+    EXIT,
+    CLEAR,
+    PRINT_ALL_DATA,
+    PRINT_RAW_DATA,
+    PRINT_STA_DATA,
+    PRINT_LINE,
+    PRINT_R2,
+    PRINT_RSS,
+    PRINT_RMSE,
+    UNDEFINED
+};
