@@ -4,19 +4,22 @@
 
 #include "type.h"
 
-#define RESET   "\033[0m"
-#define GREEN   "\033[32m"
-#define CYAN    "\033[36m"
-#define YELLOW  "\033[33m"
-#define RED     "\033[31m"
-#define BLUE "\033[38;5;19m"
-
 void AllCaps(std::string& s){
     for(size_t i = 0; i < s.size(); ++i){
         if(s[i] >= 'a' && s[i] <= 'z'){
             s[i] = s[i] - 'a' + 'A';
         }
     }
+}
+
+void RemoveSpace(std::string& s){
+    std::string result;
+    for(size_t i = 0; i < s.size(); ++i){
+        if(s[i] != ' '){
+            result += s[i];
+        }
+    }
+    s = result;
 }
 
 bool IsNumber(const std::string& s){
@@ -33,6 +36,7 @@ bool IsNumber(const std::string& s){
 COMMAND Parser(const std::string& inputString){
     std::string cmd = inputString;
     AllCaps(cmd);
+    RemoveSpace(cmd);
     if(cmd == "!HELP") return HELP;
     if(cmd == "!EXIT") return EXIT;
     if(cmd == "!CLEAR") return CLEAR;

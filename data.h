@@ -2,6 +2,7 @@
 #include <cassert>
 
 #include "statisticsData.h"
+#include "type.h"
 
 
 class Data{
@@ -56,6 +57,10 @@ public:
         std::cout << statis << std::endl;
     }
 
+    void PrintRawData() const {
+        std::cout << *this << std::endl;
+    }
+
     friend std::istream& operator>>(std::istream& is, Data& d){
         if(d.numberOfVariable == 1){
             double val;
@@ -77,13 +82,15 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Data& d){
         if(d.numberOfVariable == 2){
+            os << YELLOW << "Raw Data :\n" << RESET;
             assert(d.oriDataX.size() == d.oriDataY.size());
-            os << "[ ";
+            os << "    [ ";
             for(size_t i = 0; i < d.oriDataX.size(); ++i) os << "{" << d.oriDataX[i] << ", " << d.oriDataY[i] << "} ";
-            os << " ]";
+            os << "]";
         }
         else if(d.numberOfVariable == 1){
-            os << "[ ";
+            os << YELLOW << "Raw Data :\n" << RESET;
+            os << "    [ ";
             for(size_t i = 0; i < d.oriDataX.size(); ++i) os << d.oriDataX[i] << ", ";
             if(d.oriDataX.size() != 0) os << "\b\b";
             os << " ]";

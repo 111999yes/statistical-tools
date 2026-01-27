@@ -1,6 +1,7 @@
 #pragma once
 
 #include "statistics.h"
+#include "type.h"
 
 class StaData{
 friend class Data;
@@ -8,28 +9,30 @@ public:
     
     friend std::ostream& operator<<(std::ostream& os, const StaData& sta){
         if(sta.numOfVar == 1){
-            os << "Minimum : " << sta.minimum[0] << "\n";
-            os << "Maximum : " << sta.maximum[0] << "\n";
-            os << "Range : " << sta.range[0] << "\n";
-            os << "Median : " << sta.median[0] << "\n";
-            os << "Average : " << sta.Avg[0] << "\n";
-            os << "Variance : " << sta.Var[0] << "\n";
-            os << "Standard Deviation : " << sta.SD[0];
+            os << YELLOW << "Statistics Data:\n" << RESET;
+            os << "    Minimum : " << sta.minimum[0] << "\n";
+            os << "    Maximum : " << sta.maximum[0] << "\n";
+            os << "    Range : " << sta.range[0] << "\n";
+            os << "    Median : " << sta.median[0] << "\n";
+            os << "    Average : " << sta.Avg[0] << "\n";
+            os << "    Variance : " << sta.Var[0] << "\n";
+            os << "    Standard Deviation : " << sta.SD[0];
         }
         else{
-            os << "Minimum : {" << sta.minimum[0] << ", " << sta.minimum[1] << "}\n";
-            os << "Maximum : {" << sta.maximum[0] << ", " << sta.maximum[1] << "}\n";
-            os << "Range : {" << sta.range[0] << ", " << sta.range[1]  << "}\n";
-            os << "Median : {" << sta.median[0] << ", " << sta.median[1] << "}\n";
-            os << "Average : {" << sta.Avg[0] << ", " << sta.Avg[1] << "}\n";
-            os << "Variance : {" << sta.Var[0] << ", " << sta.Var[1] << "}\n";
-            os << "Standard Deviation : {" << sta.SD[0] << ", " << sta.SD[1] << "}\n";
-            os << "Covariance : " << sta.coVar << "\n";
-            os << "Correlation Coefficient : " << sta.relCoef << "\n";
-            os << "RSS : " << sta.RSS << "\n";
-            os << "RMSE : " << sta.RMSE << "\n";
-            os << "R^2 : " << sta.RSquare << "\n";
-            os << "Regression Line : " << sta.reLine;
+            os << YELLOW << "Statistics Data:\n" << RESET;
+            os << "    Minimum : {" << sta.minimum[0] << ", " << sta.minimum[1] << "}\n";
+            os << "    Maximum : {" << sta.maximum[0] << ", " << sta.maximum[1] << "}\n";
+            os << "    Range : {" << sta.range[0] << ", " << sta.range[1]  << "}\n";
+            os << "    Median : {" << sta.median[0] << ", " << sta.median[1] << "}\n";
+            os << "    Average : {" << sta.Avg[0] << ", " << sta.Avg[1] << "}\n";
+            os << "    Variance : {" << sta.Var[0] << ", " << sta.Var[1] << "}\n";
+            os << "    Standard Deviation : {" << sta.SD[0] << ", " << sta.SD[1] << "}\n";
+            os << "    Covariance : " << sta.coVar << "\n";
+            os << "    Correlation Coefficient : " << sta.relCoef << "\n";
+            os << "    RSS : " << sta.RSS << "\n";
+            os << "    RMSE : " << sta.RMSE << "\n";
+            os << "    R^2 : " << sta.RSquare << "\n";
+            os << "    Regression Line : " << sta.reLine;
             os << " => ";
             sta.reLine.printLine(os, SLOPE_INTERCEPT_FORM);
         }
