@@ -12,6 +12,17 @@ void AllCaps(std::string& s){
     }
 }
 
+bool IsNumber(const std::string& s){
+    try{
+        size_t idx;
+        std::stod(s, &idx);
+        return s.size() == idx;
+    }
+    catch(...){
+        return false;
+    }
+}
+
 COMMAND Parser(const std::string& inputString){
     std::string cmd = inputString;
     AllCaps(cmd);
@@ -25,7 +36,7 @@ COMMAND Parser(const std::string& inputString){
     if(cmd == "!PRINTR2") return PRINT_R2;
     if(cmd == "!PRINTRSS") return PRINT_RSS;
     if(cmd == "!PRINTRMSE") return PRINT_RMSE;
-    if(cmd[0] == '-' || (cmd[0] >= '0' && cmd[0] <= '9')) return NUMBER;
+    if(IsNumber(inputString)) return NUMBER;
     return UNDEFINED;
 
 }
