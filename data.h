@@ -61,6 +61,22 @@ public:
         std::cout << *this << std::endl;
     }
 
+    void PrintLine() const {
+        std::cout << statis.reLine << std::endl;
+    }
+
+    void PrintR2() const {
+        std::cout << statis.RSquare << std::endl;
+    }
+
+    void PrintRSS() const {
+        std::cout << statis.RSS << std::endl;
+    }
+
+    void PrintRMSE() const {
+        std::cout << statis.RMSE << std::endl;
+    }
+
     friend std::istream& operator>>(std::istream& is, Data& d){
         if(d.numberOfVariable == 1){
             double val;
