@@ -4,6 +4,13 @@
 
 #include "type.h"
 
+#define RESET   "\033[0m"
+#define GREEN   "\033[32m"
+#define CYAN    "\033[36m"
+#define YELLOW  "\033[33m"
+#define RED     "\033[31m"
+#define BLUE "\033[38;5;19m"
+
 void AllCaps(std::string& s){
     for(size_t i = 0; i < s.size(); ++i){
         if(s[i] >= 'a' && s[i] <= 'z'){
@@ -39,4 +46,30 @@ COMMAND Parser(const std::string& inputString){
     if(IsNumber(inputString)) return NUMBER;
     return UNDEFINED;
 
+}
+
+void PrintHelp(bool isFirstTime){
+    if(!isFirstTime) std::cout << CYAN << "================================HELP=================================\n" << RESET;
+    if(!isFirstTime) std::cout << "\n";
+    std::cout << "Commands:\n" << RESET;
+    std::cout << "  !" << CYAN << "HELP           " << RESET << ": Show this help message\n";
+    std::cout << "  !" << RED << "EXIT           " << RESET << ": Exit current input loop\n";
+    std::cout << "  !" << GREEN << "CLEAR          " << RESET << ": Clear all data and reset variable count\n";
+    std::cout << "  !" << BLUE << "PRINTALLDATA   " << RESET << ": Print raw and statistical data\n";
+    std::cout << "  !" << BLUE << "PRINTRAWDATA   " << RESET << ": Print only raw input data\n";
+    std::cout << "  !" << BLUE << "PRINTSTADATA   " << RESET << ": Print only calculated statistics\n";
+    std::cout << "  !" << BLUE << "PRINTLINE      " << RESET << ": Print the regression line\n";
+    std::cout << "  !" << BLUE << "PRINTR2        " << RESET << ": Print coefficient of determination (R^2)\n";
+    std::cout << "  !" << BLUE << "PRINTRSS       " << RESET << ": Print residual sum of squares (RSS)\n";
+    std::cout << "  !" << BLUE << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
+    std::cout << "\n";
+    std::cout << YELLOW << "Number input:\n" << RESET;
+    std::cout << "  Enter numbers directly to add them to the dataset.\n";
+    std::cout << "  For single-variable data, enter one number at a time.\n";
+    std::cout << "  For two-variable data, enter X and Y separated by a space.\n";
+    std::cout << "\n";
+    std::cout << YELLOW << "Notes:\n" << RESET;
+    std::cout << "  - Variable number is fixed at the start. Use !CLEAR to reset.\n";
+    std::cout << "  - Commands are case-insensitive.\n";
+    std::cout << "  - Numbers can include signs (+/-) and decimal points.\n";
 }

@@ -103,14 +103,14 @@ private:
 void SetUpVariable(Data& data){
     int num;
     while(true){
-        std::cout << "Enter the number of variables :";
+        std::cout << ">Enter the number of variables :";
         if(std::cin >> num && (num == 1 || num == 2)){
             data.clear();
             data.InputData(num);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
-        std::cout << "Invalid input number, please retry";
+        std::cout << ">Invalid input number, please retry";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
