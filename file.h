@@ -6,23 +6,15 @@
 #include "data.h"
 
 void WriteOut(const std::string& fileName, const Data& data){
-    WriteOut(fileName, fileName, data);
-}
-
-void WriteOut(const std::string& rawFileName, const std::string& staFileName, const Data& data){
-    std::ofstream RawFile;
-    RawFile.open(rawFileName, std::ios::app);
-    if(RawFile.fail()){
-        throw std::runtime_error("Can not open file");
-    }
-    RawFile << data.WriteOutRawData().str();
-    RawFile.close();
-    
     std::ofstream StaFile;
-    StaFile.open(staFileName, std::ios::app);
+    StaFile.open(fileName, std::ios::app);
     if(StaFile.fail()){
         throw std::runtime_error("Can not open file");
     }
+    StaFile << data.WriteOutRawData().str();
+    
+    StaFile << "===================================\n";
+
     StaFile << data.WriteOutStaData().str();
     StaFile.close();
 }
