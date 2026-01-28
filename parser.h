@@ -3,6 +3,7 @@
 #include <string>
 
 #include "type.h"
+#include "data.h"
 
 void AllCaps(std::string& s){
     for(size_t i = 0; i < s.size(); ++i){
@@ -33,6 +34,28 @@ bool IsNumber(const std::string& s){
     }
 }
 
+std::pair<std::string, std::string> SeperateString(const std::string& s){
+    bool hasNumAppear = false;
+    bool hasSpaAppear = false;
+    std::string first;
+    std::string second;
+    for(size_t i = 0; i < s.size(); ++i){
+        if(!hasNumAppear && (s[i] >= '0' && s[i] <= '9')){
+            hasNumAppear = true;
+        }
+        else if(hasNumAppear && s[i] == ' '){
+            hasSpaAppear = true;
+        }
+        else if(hasSpaAppear){
+            second += s[i];
+        }
+        if(!hasSpaAppear){
+            first += s[i];
+        }
+    }
+    return {first, second};
+}
+
 COMMAND Parser(const std::string& inputString){
     std::string cmd = inputString;
     AllCaps(cmd);
@@ -47,7 +70,7 @@ COMMAND Parser(const std::string& inputString){
     if(cmd == "!PRINTR2") return PRINT_R2;
     if(cmd == "!PRINTRSS") return PRINT_RSS;
     if(cmd == "!PRINTRMSE") return PRINT_RMSE;
-    if(IsNumber(inputString)) return NUMBER;
+    if(IsNumber(inputString)) return ONE_NUMBER;
     return UNDEFINED;
 
 }
@@ -76,4 +99,16 @@ void PrintHelp(bool isFirstTime){
     std::cout << "  - Variable number is fixed at the start. Use !CLEAR to reset.\n";
     std::cout << "  - Commands are case-insensitive.\n";
     std::cout << "  - Numbers can include signs (+/-) and decimal points.\n";
+}
+
+void StringToDouble(const std::string& input, const Data& data){
+    std::string number = input;
+    int numOfVar = data.GetNumOfVar();
+    if(numOfVar == 1){
+
+    }
+    else if(numOfVar == 2){
+
+    }
+    else throw std::runtime_error("Number of variable must be 1 or 2");
 }

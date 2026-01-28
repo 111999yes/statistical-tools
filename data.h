@@ -29,6 +29,10 @@ public:
         return oriDataX.size();
     }
 
+    int GetNumOfVar() const {
+        return numberOfVariable;
+    }
+
     void CalStatis(){
         statis.minimum[0] = Minimum(oriDataX);
         statis.minimum[1] = Minimum(oriDataY);
