@@ -13,7 +13,7 @@ void WriteOut(const std::string& fileName, const Data& data){
     }
     StaFile << data.WriteOutRawData().str();
     
-    StaFile << "===================================\n";
+    StaFile << "\n===================================\n\n";
 
     StaFile << data.WriteOutStaData().str();
     StaFile.close();
@@ -45,6 +45,7 @@ std::stringstream Data::WriteOutStaData() const {
         ss << "    Average : " << statis.Avg[0] << "\n";
         ss << "    Variance : " << statis.Var[0] << "\n";
         ss << "    Standard Deviation : " << statis.SD[0];
+        ss << "\n";
     }
     else{
         ss << "Statistics Data:\n";

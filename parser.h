@@ -34,6 +34,15 @@ bool IsNumber(const std::string& s){
     }
 }
 
+void RemoveFrontSpace(std::string& s){
+    size_t pos = s.find_first_not_of(" \t\n\r");
+    if(pos == std::string::npos){
+        s.clear();
+    }else{
+        s.erase(0, pos);
+    }
+}
+
 std::pair<std::string, std::string> SeperateString(const std::string& s){
     bool hasNumAppear = false;
     bool hasSpaAppear = false;
@@ -53,6 +62,7 @@ std::pair<std::string, std::string> SeperateString(const std::string& s){
             first += s[i];
         }
     }
+    RemoveFrontSpace(first);
     return {first, second};
 }
 
