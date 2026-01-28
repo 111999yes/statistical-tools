@@ -1,5 +1,4 @@
 #pragma once
-#include <cassert>
 #include <sstream>
 
 #include "statisticsData.h"
@@ -129,7 +128,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Data& d){
         if(d.numberOfVariable == 2){
             os << YELLOW << "Raw Data :\n" << RESET;
-            assert(d.oriDataX.size() == d.oriDataY.size());
+            if(d.oriDataX.size() != d.oriDataY.size()) throw std::invalid_argument("Vector size mismatch");
             os << "    [ ";
             for(size_t i = 0; i < d.oriDataX.size(); ++i) os << "{" << d.oriDataX[i] << ", " << d.oriDataY[i] << "} ";
             os << "]";

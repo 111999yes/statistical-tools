@@ -5,17 +5,17 @@
 
 #include "data.h"
 
-void WriteOut(std::string& fileName, Data& data){
-    std::fstream RawFile;
-    RawFile.open("output.txt", std::ios::app);
+void WriteOut(std::string& rawFileName, std::string& staFileName, Data& data){
+    std::ofstream RawFile;
+    RawFile.open(rawFileName, std::ios::app);
     if(RawFile.fail()){
         throw std::runtime_error("Can not open file");
     }
     RawFile << data.WriteOutRawData().str();
     RawFile.close();
     
-    std::fstream StaFile;
-    StaFile.open("output.txt", std::ios::app);
+    std::ofstream StaFile;
+    StaFile.open(staFileName, std::ios::app);
     if(StaFile.fail()){
         throw std::runtime_error("Can not open file");
     }
@@ -27,7 +27,7 @@ std::stringstream Data::WriteOutRawData() const {
     stringstream ss;
     if(numberOfVariable == 2){
         ss << "Raw Data :\n";
-        assert(oriDataX.size() == oriDataY.size());
+        if(oriDataX.size() != oriDataY.size()) throw std::invalid_argument("Vector size mismatch");
         for(size_t i = 0; i < oriDataX.size(); ++i) ss << "    " << (i + 1) <<". {" << oriDataX[i] << ", " << oriDataY[i] << "}\n";
     }
     else if(numberOfVariable == 1){
