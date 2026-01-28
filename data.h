@@ -34,6 +34,9 @@ public:
         return numberOfVariable;
     }
 
+    std::stringstream WriteOutRawData() const ;
+    std::stringstream WriteOutStaData();
+
     void CalStatis(){
         statis.minimum[0] = Minimum(oriDataX);
         statis.minimum[1] = Minimum(oriDataY);

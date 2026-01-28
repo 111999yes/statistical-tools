@@ -18,9 +18,12 @@ public:
             const double eps = 1e-8;
             double intercept = (avgPoint.first * slope - avgPoint.second);
             os << "y = ";
-            os << slope << "x ";
+            if(std::abs(slope - 1.0) < eps) {}
+            else if(std::abs(slope + 1.0) < eps) {os << "-";}
+            else {os << slope;}
+            os << "x";
             if(std::abs(intercept) > eps){
-                os << ((intercept > 0) ? "+ ":"- ") << std::abs(intercept);
+                os << ((intercept > 0) ? " + ":" - ") << std::abs(intercept);
             }
         }
     }
