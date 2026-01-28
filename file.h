@@ -5,7 +5,11 @@
 
 #include "data.h"
 
-void WriteOut(std::string& rawFileName, std::string& staFileName, Data& data){
+void WriteOut(const std::string& fileName, const Data& data){
+    WriteOut(fileName, fileName, data);
+}
+
+void WriteOut(const std::string& rawFileName, const std::string& staFileName, const Data& data){
     std::ofstream RawFile;
     RawFile.open(rawFileName, std::ios::app);
     if(RawFile.fail()){
@@ -38,9 +42,8 @@ std::stringstream Data::WriteOutRawData() const {
     return ss;
 }
 
-std::stringstream Data::WriteOutStaData(){
+std::stringstream Data::WriteOutStaData() const {
     stringstream ss;
-    CalStatis();
     if(numberOfVariable == 1){
         ss << "Statistics Data:\n";
         ss << "    Minimum : " << statis.minimum[0] << "\n";
