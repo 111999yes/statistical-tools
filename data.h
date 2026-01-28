@@ -67,18 +67,22 @@ public:
     }
 
     void PrintLine() const {
+        if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
         std::cout << statis.reLine << std::endl;
     }
 
     void PrintR2() const {
+        if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
         std::cout << statis.RSquare << std::endl;
     }
 
     void PrintRSS() const {
+        if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
         std::cout << statis.RSS << std::endl;
     }
 
     void PrintRMSE() const {
+        if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
         std::cout << statis.RMSE << std::endl;
     }
 
