@@ -70,25 +70,27 @@ COMMAND Parser(const std::string& inputString){
     if(cmd == "!PRINTR2") return PRINT_R2;
     if(cmd == "!PRINTRSS") return PRINT_RSS;
     if(cmd == "!PRINTRMSE") return PRINT_RMSE;
-    if(IsNumber(inputString)) return ONE_NUMBER;
+    std::pair<std::string, std::string> seperated = SeperateString(inputString);
+    if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()) return TWO_NUMBER;
+    if(IsNumber(seperated.first) && seperated.second.empty()) return ONE_NUMBER;
     return UNDEFINED;
 
 }
 
 void PrintHelp(bool isFirstTime){
-    if(!isFirstTime) std::cout << CYAN << "================================HELP=================================\n" << RESET;
+    if(!isFirstTime) std::cout << CYAN << "=================================HELP=================================\n" << RESET;
     if(!isFirstTime) std::cout << "\n";
-    std::cout << "Commands:\n" << RESET;
+    std::cout << YELLOW << "Commands:\n" << RESET;
     std::cout << "  !" << CYAN << "HELP           " << RESET << ": Show this help message\n";
     std::cout << "  !" << RED << "EXIT           " << RESET << ": Exit current input loop\n";
     std::cout << "  !" << GREEN << "CLEAR          " << RESET << ": Clear all data and reset variable count\n";
-    std::cout << "  !" << BLUE << "PRINTALLDATA   " << RESET << ": Print raw and statistical data\n";
-    std::cout << "  !" << BLUE << "PRINTRAWDATA   " << RESET << ": Print only raw input data\n";
-    std::cout << "  !" << BLUE << "PRINTSTADATA   " << RESET << ": Print only calculated statistics\n";
-    std::cout << "  !" << BLUE << "PRINTLINE      " << RESET << ": Print the regression line\n";
-    std::cout << "  !" << BLUE << "PRINTR2        " << RESET << ": Print coefficient of determination (R^2)\n";
-    std::cout << "  !" << BLUE << "PRINTRSS       " << RESET << ": Print residual sum of squares (RSS)\n";
-    std::cout << "  !" << BLUE << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
+    std::cout << "  !" << MAGENTA << "PRINTALLDATA   " << RESET << ": Print raw and statistical data\n";
+    std::cout << "  !" << MAGENTA << "PRINTRAWDATA   " << RESET << ": Print only raw input data\n";
+    std::cout << "  !" << MAGENTA << "PRINTSTADATA   " << RESET << ": Print only calculated statistics\n";
+    std::cout << "  !" << MAGENTA << "PRINTLINE      " << RESET << ": Print the regression line\n";
+    std::cout << "  !" << MAGENTA << "PRINTR2        " << RESET << ": Print coefficient of determination (R^2)\n";
+    std::cout << "  !" << MAGENTA << "PRINTRSS       " << RESET << ": Print residual sum of squares (RSS)\n";
+    std::cout << "  !" << MAGENTA << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
     std::cout << "\n";
     std::cout << YELLOW << "Number input:\n" << RESET;
     std::cout << "  Enter numbers directly to add them to the dataset.\n";
