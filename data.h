@@ -1,5 +1,6 @@
 #pragma once
 #include <cassert>
+#include <sstream>
 
 #include "statisticsData.h"
 #include "type.h"
@@ -79,6 +80,24 @@ public:
 
     void PrintRMSE() const {
         std::cout << statis.RMSE << std::endl;
+    }
+
+    void AddData(const std::pair<std::string, std::string>& input, const COMMAND& cmd){
+        if((cmd == ONE_NUMBER && numberOfVariable != 1) || (cmd == TWO_NUMBER && numberOfVariable != 2))
+            throw std::invalid_argument("Number of variable mismatch");
+        if(cmd == ONE_NUMBER){
+            double x = std::stod(input.first);
+            std::stringstream ss;
+            ss << x;
+            ss >> *this;
+        }
+        else if(cmd == TWO_NUMBER){
+            double x = std::stod(input.first);
+            double y = std::stod(input.second);
+            std::stringstream ss;
+            ss << x << " " << y;
+            ss >> *this;
+        }
     }
 
     friend std::istream& operator>>(std::istream& is, Data& d){
