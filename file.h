@@ -7,6 +7,8 @@
 #include "data.h"
 #include "parser.h"
 
+bool CheckOverWrite();
+
 void WriteOut(const std::string& fileName, const Data& data){
     std::ofstream StaFile;
     StaFile.open(fileName, std::ios::app);
@@ -21,30 +23,49 @@ void WriteOut(const std::string& fileName, const Data& data){
     StaFile.close();
 }
 
-void WriteIn(const std::string& fileName, Data& data){
+void WriteIn(const std::string& fileName, Data& data, bool isStart){
     std::ifstream oriDataFile;
-    oriDataFile.open("input.txt", std::ios::in);
+    oriDataFile.open(fileName, std::ios::in);
     if(oriDataFile.fail()){
         throw std::runtime_error("Can not open file");
     }
+
     int numOfVar;
     if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
         throw std::runtime_error("Invalid file format");
     }
+
+    bool isOverwrite = isStart ? true:CheckOverWrite();
     
-    data.SetNumberOfVariable(numOfVar);
+
+    if(isOverwrite){
+        data.clear();
+        data.SetNumberOfVariable(numOfVar);
+    }
+    else{
+        if(data.GetNumOfVar() != numOfVar)
+            throw std::runtime_error("Number of variable mismatch");
+    }
+
     oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::string input;
+    int line = 2;
     while(std::getline(oriDataFile, input)){
         if(input.empty()) continue;
         std::pair<std::string, std::string> seperated = SeperateString(input);
-        if(numOfVar == 1){
-            data.AddData(seperated, ONE_NUMBER);
+        try{
+            if(data.GetNumOfVar() == 1){
+                data.AddData(seperated, ONE_NUMBER);
+            }
+            else if(data.GetNumOfVar() == 2){
+                data.AddData(seperated, TWO_NUMBER);
+            }
         }
-        else if(numOfVar == 2){
-            data.AddData(seperated, TWO_NUMBER);
+        catch(const std::invalid_argument& e){
+            std::cout << "Wrong input at line " << line << "\n "<< "Problem : " << e.what() << "\n";
         }
+        line++;
     }
     
 }
@@ -63,7 +84,7 @@ void StartApp(Data& data){
             std::cout << "Please enter the file name : ";
             std::cin >> fileName;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            WriteIn(fileName, data);
+            WriteIn(fileName, data, true);
             std::cout  << GREEN << "File write in successfully\n" << RESET;
             break;
         }
@@ -106,6 +127,30 @@ void EndApp(Data& data){
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
+}
+
+bool CheckOverWrite(){
+    std::cout << "Do you want ot overwrite current data? (Enter[y/n])\n";
+    std::string s;
+    while(true){
+        getline(std::cin, s);
+        AllCaps(s);
+        RemoveSpace(s);
+        if(s == "Y" || s == "YES"){
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return true;
+        }
+        else if(s == "N" || s == "NO"){
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return false;
+        }
+        else{
+            std::cout  << RED << ">Invalid command, please retry\n" << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    
 }
 
 std::stringstream Data::WriteOutRawData() const {
