@@ -3,6 +3,7 @@
 #include "data.h"
 #include "type.h"
 #include "parser.h"
+#include "file.h"
 
 void Execute(const COMMAND& cmd, const std::string& input, Data& data){
     try{
@@ -63,6 +64,27 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                     std::cout << GREEN << "Adding {" << CYAN << seperated.first << GREEN << ", " << CYAN << seperated.second << GREEN << "} into data successfully"  << RESET << std::endl;
                 }
                 break;
+            case WRITEIN:
+                {
+                    std::string fileName;
+                    std::cout << "Please enter the file name : ";
+                    std::cin >> fileName;
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    WriteIn(fileName, data, false);
+                    std::cout  << GREEN << "File write in successfully\n" << RESET;
+                }
+                break;
+            case WRITEOUT:
+                {
+                    std::string fileName;
+                    std::cout << "Please enter the file name : ";
+                    std::cin >> fileName;
+                    data.CalStatis();
+                    WriteOut(fileName, data);
+                    std::cout  << GREEN << "File save successfully\n" << RESET;
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+                break;
             case UNDEFINED:
                 std::cout << RED << "Invalid command, please try again!(Enter !help for help)" << RESET << std::endl;
                 break;
@@ -81,8 +103,3 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
     }
 }
 
-void init(){
-    std::cout << ORANGE << "=============================INTRODUCTION=============================\n\n" << RESET;
-    PrintHelp(1);
-    std::cout << ORANGE << "\n======================================================================\n" << RESET;
-}

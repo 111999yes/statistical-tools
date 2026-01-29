@@ -8,6 +8,7 @@
 #include "parser.h"
 
 bool CheckOverWrite();
+void init();
 
 void WriteOut(const std::string& fileName, const Data& data){
     std::ofstream StaFile;
@@ -137,17 +138,14 @@ bool CheckOverWrite(){
         AllCaps(s);
         RemoveSpace(s);
         if(s == "Y" || s == "YES"){
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return true;
         }
         else if(s == "N" || s == "NO"){
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return false;
         }
         else{
             std::cout  << RED << ">Invalid command, please retry\n" << RESET;
             std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
     
@@ -201,4 +199,10 @@ std::stringstream Data::WriteOutStaData() const {
         ss << "\n";
     }
     return ss;
+}
+
+void init(){
+    std::cout << ORANGE << "=============================INTRODUCTION=============================\n\n" << RESET;
+    PrintHelp(1);
+    std::cout << ORANGE << "\n======================================================================\n" << RESET;
 }

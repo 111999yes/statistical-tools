@@ -80,6 +80,8 @@ COMMAND Parser(const std::string& inputString){
     if(cmd == "!PRINTR2") return PRINT_R2;
     if(cmd == "!PRINTRSS") return PRINT_RSS;
     if(cmd == "!PRINTRMSE") return PRINT_RMSE;
+    if(cmd == "!WRITEIN") return WRITEIN;
+    if(cmd == "!WRITEOUT") return WRITEOUT;
     std::pair<std::string, std::string> seperated = SeperateString(inputString);
     if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()) return TWO_NUMBER;
     if(IsNumber(seperated.first) && seperated.second.empty()) return ONE_NUMBER;
