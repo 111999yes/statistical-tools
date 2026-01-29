@@ -103,6 +103,8 @@ void PrintHelp(bool isFirstTime){
     std::cout << "  !" << MAGENTA << "PRINTR2        " << RESET << ": Print coefficient of determination (R^2)\n";
     std::cout << "  !" << MAGENTA << "PRINTRSS       " << RESET << ": Print residual sum of squares (RSS)\n";
     std::cout << "  !" << MAGENTA << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
+    std::cout << "  !" << BLUE << "WRITEIN        " << RESET << ": Read data from " << GREEN << "\"##Raw Data\"" << RESET << " region in the file\n";
+    std::cout << "  !" << BLUE << "WRITEOUT       " << RESET << ": Write data into the file\n";
     std::cout << "\n";
     std::cout << YELLOW << "Number input:\n" << RESET;
     std::cout << "  Enter numbers directly to add them to the dataset.\n";
@@ -113,4 +115,5 @@ void PrintHelp(bool isFirstTime){
     std::cout << "  - Variable number is fixed at the start. Use !CLEAR to reset.\n";
     std::cout << "  - Commands are case-insensitive.\n";
     std::cout << "  - Numbers can include signs (+/-) and decimal points.\n";
+    if(!isFirstTime) std::cout << CYAN << "======================================================================\n" << RESET;
 }
