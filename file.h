@@ -53,6 +53,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
     std::string input;
     int line = 2;
     while(std::getline(oriDataFile, input)){
+        RemoveFrontSpace(input);
         if(input.empty()) continue;
         if(input[0] == '#') continue;
         std::pair<std::string, std::string> seperated = SeperateString(input);
