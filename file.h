@@ -30,6 +30,10 @@ void WriteOut(const std::string& fileName, const Data& data){
 }
 
 void WriteIn(const std::string& fileName, Data& data, bool isStart){
+    std::string temp = fileName;
+    AllCaps(temp);
+    RemoveSpace(temp);
+    if(temp == "!CANCLE") return;
     std::ifstream oriDataFile;
     oriDataFile.open(fileName, std::ios::in);
     if(oriDataFile.fail()){
@@ -95,31 +99,39 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
 
 void StartApp(Data& data){
     init();
-    std::cout << "Do you want to use file input? (Enter[y/n]) \n";
+    std::cout << "Do you want to load file? (Enter[y/n]) \n";
     while(true){
         std::cout << ">";
         std::string s;
+        bool isCancle = false;
         std::cin >> s;
         AllCaps(s);
         RemoveSpace(s);
         if(s == "Y" || s == "YES"){
             while(true){
                 std::string fileName;
-                std::cout << "Please enter the file name : ";
+                std::cout << "Please enter the file name(Enter !" << PURPLE << "CANCLE" << RESET << " to cancle) : ";
                 std::cin >> fileName;
+                std::string temp = fileName;
+                AllCaps(temp);
+                RemoveSpace(temp);
+                if(temp == "!CANCLE"){
+                    isCancle = true;
+                    break;
+                }
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 try{
                     WriteIn(fileName, data, true);
-                    std::cout  << GREEN << "File write in successfully\n" << RESET;
+                    std::cout  << GREEN << "File loaded successfully\n" << RESET;
                     break;
                 }
                 catch(const std::runtime_error& e){
                     std::cout << RED << "Problem happens : " << e.what() << "\n" << RESET;
                 }
             }
-            break;
+            if(!isCancle) break;
         }
-        else if(s == "N" || s == "NO"){
+        if(s == "N" || s == "NO" || isCancle){
             SetUpVariable(data);
             break;
         }
