@@ -9,10 +9,10 @@ class Data{
 public:
     Data() : numberOfVariable(0) {}
     Data(int _number){
-        InputData(_number);
+        SetNumberOfVariable(_number);
     }
 
-    void InputData(int _numberVar){
+    void SetNumberOfVariable(int _numberVar){
         if(_numberVar > 2 || _numberVar < 1) throw std::invalid_argument("Number of variable must be 1 or 2");
         else{
             numberOfVariable = _numberVar;
@@ -158,7 +158,7 @@ void SetUpVariable(Data& data){
         std::cout << GREEN << "Please enter the number of variables : " << RESET;
         if(std::cin >> num && (num == 1 || num == 2)){
             data.clear();
-            data.InputData(num);
+            data.SetNumberOfVariable(num);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }

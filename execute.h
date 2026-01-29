@@ -48,14 +48,20 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                 data.PrintRMSE();
                 break;
             case ONE_NUMBER:
-                if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
-                data.AddData(SeperateString(input), cmd);
-                std::cout << GREEN << "Adding " << CYAN << SeperateString(input).first << GREEN << " into data successfully"  << RESET << std::endl;
+                {
+                    std::pair<std::string, std::string> seperated = SeperateString(input);
+                    if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
+                    data.AddData(seperated, cmd);
+                    std::cout << GREEN << "Adding " << CYAN << seperated.first << GREEN << " into data successfully"  << RESET << std::endl;
+                }
                 break;
             case TWO_NUMBER:
-                if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
-                data.AddData(SeperateString(input), cmd);
-                std::cout << GREEN << "Adding {" << CYAN << SeperateString(input).first << GREEN << ", " << CYAN << SeperateString(input).second << GREEN << "} into data successfully"  << RESET << std::endl;
+                {
+                    std::pair<std::string, std::string> seperated = SeperateString(input);
+                    if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
+                    data.AddData(seperated, cmd);
+                    std::cout << GREEN << "Adding {" << CYAN << seperated.first << GREEN << ", " << CYAN << seperated.second << GREEN << "} into data successfully"  << RESET << std::endl;
+                }
                 break;
             case UNDEFINED:
                 std::cout << RED << "Invalid command, please try again!(Enter !help for help)" << RESET << std::endl;

@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 
 #include "data.h"
@@ -18,6 +19,34 @@ void WriteOut(const std::string& fileName, const Data& data){
 
     StaFile << data.WriteOutStaData().str();
     StaFile.close();
+}
+
+void WriteIn(const std::string& fileName, Data& data){
+    std::ifstream oriDataFile;
+    oriDataFile.open("input.txt", std::ios::in);
+    if(oriDataFile.fail()){
+        throw std::runtime_error("Can not open file");
+    }
+    int numOfVar;
+    if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
+        throw std::runtime_error("Invalid file format");
+    }
+    
+    data.SetNumberOfVariable(numOfVar);
+    oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::string input;
+    while(std::getline(oriDataFile, input)){
+        if(input.empty()) continue;
+        std::pair<std::string, std::string> seperated = SeperateString(input);
+        if(numOfVar == 1){
+            data.AddData(seperated, ONE_NUMBER);
+        }
+        else if(numOfVar == 2){
+            data.AddData(seperated, TWO_NUMBER);
+        }
+    }
+    
 }
 
 void EndApp(Data& data){
