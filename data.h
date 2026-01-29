@@ -155,7 +155,7 @@ private:
 void SetUpVariable(Data& data){
     int num;
     while(true){
-        std::cout << GREEN << "Enter the number of variables : " << RESET;
+        std::cout << GREEN << "Please enter the number of variables : " << RESET;
         if(std::cin >> num && (num == 1 || num == 2)){
             data.clear();
             data.InputData(num);

@@ -4,6 +4,7 @@
 
 
 #include "data.h"
+#include "parser.h"
 
 void WriteOut(const std::string& fileName, const Data& data){
     std::ofstream StaFile;
@@ -17,6 +18,35 @@ void WriteOut(const std::string& fileName, const Data& data){
 
     StaFile << data.WriteOutStaData().str();
     StaFile.close();
+}
+
+void EndApp(Data& data){
+    std::cout << "Do you want to save the data? (Enter [y/n]) \n";
+    while(true){
+        std::cout << ">";
+        std::string s;
+        std::cin >> s;
+        AllCaps(s);
+        RemoveSpace(s);
+        if(s == "Y" || s == "YES"){
+            data.CalStatis();
+            std::string fileName;
+            std::cout << "Please enter the file name : ";
+            std::cin >> fileName;
+            WriteOut(fileName, data);
+            std::cout  << GREEN << "File save successfully\n" << RESET;
+            break;
+        }
+        else if(s == "N" || s == "NO"){
+            std::cout << BLUE << "Bye!\n" << RESET;
+            break;
+        }
+        else{
+            std::cout  << RED << ">Invalid command, please retry\n" << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
 }
 
 std::stringstream Data::WriteOutRawData() const {
