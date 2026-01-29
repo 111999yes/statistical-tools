@@ -54,6 +54,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
     int line = 2;
     while(std::getline(oriDataFile, input)){
         if(input.empty()) continue;
+        if(input[0] == '#') continue;
         std::pair<std::string, std::string> seperated = SeperateString(input);
         try{
             if(data.GetNumOfVar() == 1){
@@ -154,12 +155,12 @@ bool CheckOverWrite(){
 std::stringstream Data::WriteOutRawData() const {
     stringstream ss;
     if(numberOfVariable == 2){
-        ss << "Raw Data :\n";
+        ss << "#Raw Data :\n";
         if(oriDataX.size() != oriDataY.size()) throw std::invalid_argument("Vector size mismatch");
         for(size_t i = 0; i < oriDataX.size(); ++i) ss << "    " << (i + 1) <<". {" << oriDataX[i] << ", " << oriDataY[i] << "}\n";
     }
     else if(numberOfVariable == 1){
-        ss << "Raw Data :\n";
+        ss << "#Raw Data :\n";
         for(size_t i = 0; i < oriDataX.size(); ++i) ss << "    " << (i + 1) << ". " << oriDataX[i] << "\n";
     }
     else throw std::logic_error("numberOfVariable not set");
@@ -169,7 +170,7 @@ std::stringstream Data::WriteOutRawData() const {
 std::stringstream Data::WriteOutStaData() const {
     stringstream ss;
     if(numberOfVariable == 1){
-        ss << "Statistics Data:\n";
+        ss << "#Statistics Data:\n";
         ss << "    Minimum : " << statis.minimum[0] << "\n";
         ss << "    Maximum : " << statis.maximum[0] << "\n";
         ss << "    Range : " << statis.range[0] << "\n";
@@ -180,7 +181,7 @@ std::stringstream Data::WriteOutStaData() const {
         ss << "\n";
     }
     else{
-        ss << "Statistics Data:\n";
+        ss << "#Statistics Data:\n";
         ss << "    Minimum : {" << statis.minimum[0] << ", " << statis.minimum[1] << "}\n";
         ss << "    Maximum : {" << statis.maximum[0] << ", " << statis.maximum[1] << "}\n";
         ss << "    Range : {" << statis.range[0] << ", " << statis.range[1]  << "}\n";
