@@ -187,7 +187,7 @@ bool CheckOverWrite(){
 }
 
 std::stringstream Data::WriteOutRawData() const {
-    stringstream ss;
+    std::stringstream ss;
     if(numberOfVariable == 2){
         ss << "#Raw Data :\n";
         if(oriDataX.size() != oriDataY.size()) throw std::invalid_argument("Vector size mismatch");
@@ -202,7 +202,7 @@ std::stringstream Data::WriteOutRawData() const {
 }
 
 std::stringstream Data::WriteOutStaData() const {
-    stringstream ss;
+    std::stringstream ss;
     if(numberOfVariable == 1){
         ss << "#Statistics Data:\n";
         ss << "    Minimum : " << statis.minimum[0] << "\n";

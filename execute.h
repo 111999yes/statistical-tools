@@ -93,13 +93,13 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
         }
     }
     catch(const std::invalid_argument& e){
-        std::cerr << RED << "Some problem happen : " << e.what() << RESET << std::endl;
+        std::cerr << RED << "Some problems happen : " << e.what() << RESET << std::endl;
     }
     catch(const std::runtime_error& e){
-        std::cerr << RED << "Some problem happen : " << e.what() << RESET << std::endl;
+        std::cerr << RED << "Some problems happen : " << e.what() << RESET << std::endl;
     }
     catch(const std::logic_error& e){
-        std::cerr << RED << "Some problem happen : " << e.what() << RESET << std::endl;
+        std::cerr << RED << "Some problems happen : " << e.what() << RESET << std::endl;
     }
 }
 
