@@ -12,7 +12,7 @@ void init();
 
 void WriteOut(const std::string& fileName, const Data& data){
     std::ofstream StaFile;
-    StaFile.open(fileName, std::ios::app);
+    StaFile.open(fileName, std::ios::out | std::ios::trunc);
     if(StaFile.fail()){
         throw std::runtime_error("Can not open file");
     }
@@ -21,6 +21,11 @@ void WriteOut(const std::string& fileName, const Data& data){
     StaFile << "\n===================================\n\n";
 
     StaFile << data.WriteOutStaData().str();
+
+    StaFile << "\n===================================\n\n";
+
+    StaFile << data.WriteOutMacData().str();
+
     StaFile.close();
 }
 
@@ -31,43 +36,59 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
         throw std::runtime_error("Can not open file");
     }
 
-    int numOfVar;
-    if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
-        throw std::runtime_error("Invalid file format");
-    }
-
-    bool isOverwrite = isStart ? true:CheckOverWrite();
-    
-
-    if(isOverwrite){
-        data.clear();
-        data.SetNumberOfVariable(numOfVar);
-    }
-    else{
-        if(data.GetNumOfVar() != numOfVar)
-            throw std::runtime_error("Number of variable mismatch");
-    }
-
-    oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    std::string input;
-    int line = 2;
-    while(std::getline(oriDataFile, input)){
-        RemoveFrontSpace(input);
-        if(input.empty() || input[0] == '#') continue;
-        std::pair<std::string, std::string> seperated = SeperateString(input);
-        try{
-            if(data.GetNumOfVar() == 1){
-                data.AddData(seperated, ONE_NUMBER);
-            }
-            else if(data.GetNumOfVar() == 2){
-                data.AddData(seperated, TWO_NUMBER);
-            }
+    bool inRawDataBlock = false;
+    std::string s;
+    while(std::getline(oriDataFile, s)){
+        if(s.empty()) continue;
+        if(s.find("##Raw Data") != std::string::npos){
+            inRawDataBlock = true;
+            break;
         }
-        catch(const std::invalid_argument& e){
-            std::cout << "Wrong input at line " << line << "\n "<< "Problem : " << e.what() << "\n";
+    }
+
+    if(!inRawDataBlock){
+        throw std::runtime_error("No readable data found in file");
+    }
+
+    if(inRawDataBlock){
+        int numOfVar;
+        if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
+            throw std::runtime_error("Invalid file format");
         }
-        line++;
+
+        bool isOverwrite = isStart ? true:CheckOverWrite();
+        
+
+        if(isOverwrite){
+            data.clear();
+            data.SetNumberOfVariable(numOfVar);
+        }
+        else{
+            if(data.GetNumOfVar() != numOfVar)
+                throw std::runtime_error("Number of variable mismatch");
+        }
+
+        oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        std::string input;
+        int line = 2;
+        while(std::getline(oriDataFile, input)){
+            RemoveFrontSpace(input);
+            if(input.empty() || input[0] == '#') continue;
+            std::pair<std::string, std::string> seperated = SeperateString(input);
+            try{
+                if(data.GetNumOfVar() == 1){
+                    data.AddData(seperated, ONE_NUMBER);
+                }
+                else if(data.GetNumOfVar() == 2){
+                    data.AddData(seperated, TWO_NUMBER);
+                }
+            }
+            catch(const std::invalid_argument& e){
+                std::cout << "Wrong input at line " << line << "\n "<< "Problem : " << e.what() << "\n";
+            }
+            line++;
+        }
     }
     
 }
@@ -82,12 +103,20 @@ void StartApp(Data& data){
         AllCaps(s);
         RemoveSpace(s);
         if(s == "Y" || s == "YES"){
-            std::string fileName;
-            std::cout << "Please enter the file name : ";
-            std::cin >> fileName;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            WriteIn(fileName, data, true);
-            std::cout  << GREEN << "File write in successfully\n" << RESET;
+            while(true){
+                std::string fileName;
+                std::cout << "Please enter the file name : ";
+                std::cin >> fileName;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                try{
+                    WriteIn(fileName, data, true);
+                    std::cout  << GREEN << "File write in successfully\n" << RESET;
+                    break;
+                }
+                catch(const std::runtime_error& e){
+                    std::cout << RED << "Problem happens : " << e.what() << "\n" << RESET;
+                }
+            }
             break;
         }
         else if(s == "N" || s == "NO"){
@@ -115,8 +144,13 @@ void EndApp(Data& data){
             std::string fileName;
             std::cout << "Please enter the file name : ";
             std::cin >> fileName;
-            WriteOut(fileName, data);
-            std::cout  << GREEN << "File save successfully\n" << RESET;
+            try{
+                WriteOut(fileName, data);
+                std::cout  << GREEN << "File save successfully\n" << RESET;
+            }
+            catch(const std::runtime_error& e){
+                std::cout << RED << "Problem happens : " << e.what() << "\n" << RESET;
+            }
             break;
         }
         else if(s == "N" || s == "NO"){
@@ -201,6 +235,20 @@ std::stringstream Data::WriteOutStaData() const {
     }
     return ss;
 }
+std::stringstream Data::WriteOutMacData() const {
+    std::stringstream ss;
+    ss << "##Raw Data\n"; 
+    if(numberOfVariable == 1){
+        ss << 1 << "\n";
+        for(size_t i = 0; i < oriDataX.size(); ++i) ss << oriDataX[i] << "\n";
+    }
+    else{
+        ss << 2 << "\n";
+        for(size_t i = 0; i < oriDataX.size(); ++i) ss << oriDataX[i] << " " << oriDataY[i] << "\n";
+    }
+    return ss;
+}
+
 
 void init(){
     std::cout << ORANGE << "=============================INTRODUCTION=============================\n\n" << RESET;

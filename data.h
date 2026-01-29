@@ -35,6 +35,7 @@ public:
 
     std::stringstream WriteOutRawData() const ;
     std::stringstream WriteOutStaData() const ;
+    std::stringstream WriteOutMacData() const ;
 
     void CalStatis(){
         statis.minimum[0] = Minimum(oriDataX);
