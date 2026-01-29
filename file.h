@@ -31,9 +31,10 @@ void WriteOut(const std::string& fileName, const Data& data){
 
 void WriteIn(const std::string& fileName, Data& data, bool isStart){
     std::string temp = fileName;
-    AllCaps(temp);
-    RemoveSpace(temp);
-    if(temp == "!CANCLE") return;
+    // bool isCancle = false;
+    // AllCaps(temp);
+    // RemoveSpace(temp);
+    // if(temp == "!CANCLE") isCancle = true;
     std::ifstream oriDataFile;
     oriDataFile.open(fileName, std::ios::in);
     if(oriDataFile.fail()){

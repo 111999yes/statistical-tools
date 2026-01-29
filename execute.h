@@ -67,11 +67,18 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
             case WRITEIN:
                 {
                     std::string fileName;
-                    std::cout << "Please enter the file name : ";
+                    std::cout << "Please enter the file name(Enter !" << PURPLE << "CANCLE" << RESET << " to cancle) : ";
                     std::cin >> fileName;
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::string temp = fileName;
+                    AllCaps(temp);
+                    RemoveSpace(temp);
+                    if(temp == "!CANCLE"){
+                        std::cout << RED << "File loading cancled\n" << RESET;
+                        break;
+                    }
                     WriteIn(fileName, data, false);
-                    std::cout  << GREEN << "File write in successfully\n" << RESET;
+                    std::cout  << GREEN << "File loaded successfully\n" << RESET;
                 }
                 break;
             case WRITEOUT:
