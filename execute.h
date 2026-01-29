@@ -81,9 +81,8 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
     }
 }
 
-void init(Data& data){
+void init(){
     std::cout << ORANGE << "=============================INTRODUCTION=============================\n\n" << RESET;
     PrintHelp(1);
     std::cout << ORANGE << "\n======================================================================\n" << RESET;
-    SetUpVariable(data);
 }

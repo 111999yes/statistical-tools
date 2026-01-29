@@ -49,6 +49,36 @@ void WriteIn(const std::string& fileName, Data& data){
     
 }
 
+void StartApp(Data& data){
+    init();
+    std::cout << "Do you want to use file input? (Enter[y/n]) \n";
+    while(true){
+        std::cout << ">";
+        std::string s;
+        std::cin >> s;
+        AllCaps(s);
+        RemoveSpace(s);
+        if(s == "Y" || s == "YES"){
+            std::string fileName;
+            std::cout << "Please enter the file name : ";
+            std::cin >> fileName;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            WriteIn(fileName, data);
+            std::cout  << GREEN << "File write in successfully\n" << RESET;
+            break;
+        }
+        else if(s == "N" || s == "NO"){
+            SetUpVariable(data);
+            break;
+        }
+        else{
+            std::cout  << RED << ">Invalid command, please retry\n" << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+}
+
 void EndApp(Data& data){
     std::cout << "Do you want to save the data? (Enter [y/n]) \n";
     while(true){
