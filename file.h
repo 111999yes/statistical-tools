@@ -92,10 +92,10 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
             std::pair<std::string, std::string> seperated = SeperateString(input);
             try{
                 if(data.GetNumOfVar() == 1){
-                    data.AddData(seperated, ONE_NUMBER);
+                    data.AddData(seperated, COMMAND::ONE_NUMBER);
                 }
                 else if(data.GetNumOfVar() == 2){
-                    data.AddData(seperated, TWO_NUMBER);
+                    data.AddData(seperated, COMMAND::TWO_NUMBER);
                 }
             }
             catch(const std::invalid_argument& e){
@@ -252,7 +252,7 @@ std::stringstream Data::WriteOutStaData() const {
         ss << "    R^2 : " << statis.RSquare << "\n";
         ss << "    Regression Line : " << statis.reLine;
         ss << " => ";
-        statis.reLine.printLine(ss, SLOPE_INTERCEPT_FORM);
+        statis.reLine.printLine(ss, MODE::SLOPE_INTERCEPT_FORM);
         ss << "\n";
     }
     return ss;

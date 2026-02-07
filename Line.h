@@ -13,7 +13,7 @@ public:
     Line(const Line& l) : slope(l.slope), avgPoint(l.avgPoint) {}
 
     void printLine(std::ostream& os, MODE mode) const {
-        if(mode == POINT_SLOPE_FORM) os << *this;
+        if(mode == MODE::POINT_SLOPE_FORM) os << *this;
         else{
             const double eps = 1e-8;
             double intercept = (avgPoint.first * slope - avgPoint.second);

@@ -70,22 +70,22 @@ COMMAND Parser(const std::string& inputString){
     std::string cmd = inputString;
     AllCaps(cmd);
     RemoveSpace(cmd);
-    if(cmd == "!HELP") return HELP;
-    if(cmd == "!EXIT") return EXIT;
-    if(cmd == "!CLEAR") return CLEAR;
-    if(cmd == "!PRINTALLDATA") return PRINT_ALL_DATA;
-    if(cmd == "!PRINTRAWDATA") return PRINT_RAW_DATA;
-    if(cmd == "!PRINTSTADATA") return PRINT_STA_DATA;
-    if(cmd == "!PRINTLINE") return PRINT_LINE;
-    if(cmd == "!PRINTR2") return PRINT_R2;
-    if(cmd == "!PRINTRSS") return PRINT_RSS;
-    if(cmd == "!PRINTRMSE") return PRINT_RMSE;
-    if(cmd == "!WRITEIN") return WRITEIN;
-    if(cmd == "!WRITEOUT") return WRITEOUT;
+    if(cmd == "!HELP") return COMMAND::HELP;
+    if(cmd == "!EXIT") return COMMAND::EXIT;
+    if(cmd == "!CLEAR") return COMMAND::CLEAR;
+    if(cmd == "!PRINTALLDATA") return COMMAND::PRINT_ALL_DATA;
+    if(cmd == "!PRINTRAWDATA") return COMMAND::PRINT_RAW_DATA;
+    if(cmd == "!PRINTSTADATA") return COMMAND::PRINT_STA_DATA;
+    if(cmd == "!PRINTLINE") return COMMAND::PRINT_LINE;
+    if(cmd == "!PRINTR2") return COMMAND::PRINT_R2;
+    if(cmd == "!PRINTRSS") return COMMAND::PRINT_RSS;
+    if(cmd == "!PRINTRMSE") return COMMAND::PRINT_RMSE;
+    if(cmd == "!WRITEIN") return COMMAND::WRITEIN;
+    if(cmd == "!WRITEOUT") return COMMAND::WRITEOUT;
     std::pair<std::string, std::string> seperated = SeperateString(inputString);
-    if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()) return TWO_NUMBER;
-    if(IsNumber(seperated.first) && seperated.second.empty()) return ONE_NUMBER;
-    return UNDEFINED;
+    if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()) return COMMAND::TWO_NUMBER;
+    if(IsNumber(seperated.first) && seperated.second.empty()) return COMMAND::ONE_NUMBER;
+    return COMMAND::UNDEFINED;
 
 }
 

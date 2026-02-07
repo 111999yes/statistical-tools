@@ -10,12 +10,12 @@
 #define PURPLE  "\033[38;5;19m"
 #define ORANGE  "\033[38;5;208m"
 
-enum MODE{
+enum class MODE{
     POINT_SLOPE_FORM,
     SLOPE_INTERCEPT_FORM
 };
 
-enum COMMAND{
+enum class COMMAND{
     HELP,
     EXIT,
     CLEAR,

@@ -49,7 +49,7 @@ public:
             os << "    R^2 : " << sta.RSquare << "\n";
             os << "    Regression Line : " << sta.reLine;
             os << " => ";
-            sta.reLine.printLine(os, SLOPE_INTERCEPT_FORM);
+            sta.reLine.printLine(os, MODE::SLOPE_INTERCEPT_FORM);
         }
         return os;
     }

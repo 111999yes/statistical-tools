@@ -13,7 +13,7 @@ int main(){
         COMMAND cmd = Parser(input);
         Execute(cmd, input, data);
         
-        if(cmd == EXIT) break;
+        if(cmd == COMMAND::EXIT) break;
     }
     EndApp(data);
 
