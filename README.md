@@ -125,4 +125,4 @@ clang++ -std=c++17 main.cpp -o statistical_tools.exe
 
 ## License
 
-MIT License © 2026 [111999yes]
+MIT License © 2026 111999yes
