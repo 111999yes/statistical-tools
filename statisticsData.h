@@ -6,6 +6,21 @@
 class StaData{
 friend class Data;
 public:
+
+    StaData() : numOfVar(0) {
+        std::fill_n(minimum, 2, 0.0);
+        std::fill_n(maximum, 2, 0.0);
+        std::fill_n(range, 2, 0.0);
+        std::fill_n(median, 2, 0.0);
+        std::fill_n(Avg, 2, 0.0);
+        std::fill_n(Var, 2, 0.0);
+        std::fill_n(SD, 2, 0.0);
+        coVar = 0.0;
+        relCoef = 0.0;
+        RSS = 0.0;
+        RMSE = 0.0;
+        RSquare = 0.0;
+    }
     
     friend std::ostream& operator<<(std::ostream& os, const StaData& sta){
         if(sta.numOfVar == 1){
@@ -40,6 +55,8 @@ public:
     }
 
 private:
+    int numOfVar;
+/*==========================*/
     double minimum[2];
     double maximum[2];
     double range[2];
@@ -54,6 +71,4 @@ private:
     double RMSE;
     double RSquare;
     Line reLine;
-/*==========================*/
-    int numOfVar;
 };

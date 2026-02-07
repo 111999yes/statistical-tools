@@ -38,6 +38,8 @@ public:
     std::stringstream WriteOutMacData() const ;
 
     void CalStatis(){
+        if(oriDataX.empty())
+            throw std::runtime_error("No data yo calculate");
         statis.minimum[0] = Minimum(oriDataX);
         statis.minimum[1] = Minimum(oriDataY);
         statis.maximum[0] = Maximum(oriDataX);

@@ -45,7 +45,10 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
     std::string s;
     while(std::getline(oriDataFile, s)){
         if(s.empty()) continue;
-        if(s.find("##Raw Data") != std::string::npos){
+        std::string test = s;
+        AllCaps(test);
+        RemoveSpace(test);
+        if(test.find("##RawData") != std::string::npos){
             inRawDataBlock = true;
             break;
         }
@@ -56,10 +59,16 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
     }
 
     if(inRawDataBlock){
-        int numOfVar;
-        if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
+        std::string firstLine;
+        std::getline(oriDataFile, firstLine);
+        RemoveSpace(firstLine);
+        if(firstLine != "1" && firstLine != "2"){
             throw std::runtime_error("Invalid file format");
         }
+        int numOfVar = std::stoi(firstLine);
+        // if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
+        //     throw std::runtime_error("Invalid file format");
+        // }
 
         bool isOverwrite = isStart ? true:CheckOverWrite();
         
