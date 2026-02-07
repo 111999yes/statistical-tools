@@ -53,7 +53,7 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                     std::pair<std::string, std::string> seperated = SeperateString(input);
                     if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmd);
-                    std::cout << GREEN << "Adding " << CYAN << seperated.first << GREEN << " into data successfully"  << RESET << std::endl;
+                    std::cout << GREEN << "Adding " << CYAN << std::stoi(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
                 }
                 break;
             case TWO_NUMBER:
@@ -61,7 +61,7 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                     std::pair<std::string, std::string> seperated = SeperateString(input);
                     if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmd);
-                    std::cout << GREEN << "Adding {" << CYAN << seperated.first << GREEN << ", " << CYAN << seperated.second << GREEN << "} into data successfully"  << RESET << std::endl;
+                    std::cout << GREEN << "Adding {" << CYAN << std::stoi(seperated.first) << GREEN << ", " << CYAN << std::stoi(seperated.second) << GREEN << "} into data successfully"  << RESET << std::endl;
                 }
                 break;
             case WRITEIN:

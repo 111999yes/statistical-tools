@@ -48,7 +48,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
         std::string test = s;
         AllCaps(test);
         RemoveSpace(test);
-        if(test.find("##RawData") != std::string::npos){
+        if(test.find("##RAWDATA") != std::string::npos){
             inRawDataBlock = true;
             break;
         }
@@ -82,7 +82,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
                 throw std::runtime_error("Number of variable mismatch");
         }
 
-        oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        //oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         std::string input;
         int line = 2;
