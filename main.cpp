@@ -1,20 +1,11 @@
 #include <iostream>
 
-#include "execute.h"
+#include "app.h"
 
 int main(){
     Data data;
-    std::string input;
     StartApp(data);
-    while(true){
-        std::cout << ">";
-        std::getline(std::cin, input);
-
-        COMMAND cmd = Parser(input);
-        Execute(cmd, input, data);
-        
-        if(cmd == COMMAND::EXIT) break;
-    }
+    RunApp(data);
     EndApp(data);
 
     return 0;
