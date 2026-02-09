@@ -120,9 +120,3 @@ clang++ -std=c++17 main.cpp -o statistical_tools.exe
 * Maximum 2 variables supported
 * Commands are case-insensitive
 * Supports decimal numbers and signed numbers
-
----
-
-## License
-
-MIT License © 2026 111999yes
