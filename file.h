@@ -31,10 +31,6 @@ void WriteOut(const std::string& fileName, const Data& data){
 
 void WriteIn(const std::string& fileName, Data& data, bool isStart){
     std::string temp = fileName;
-    // bool isCancle = false;
-    // AllCaps(temp);
-    // RemoveSpace(temp);
-    // if(temp == "!CANCLE") isCancle = true;
     std::ifstream oriDataFile;
     oriDataFile.open(fileName, std::ios::in);
     if(oriDataFile.fail()){
@@ -66,9 +62,6 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
             throw std::runtime_error("Invalid file format");
         }
         int numOfVar = std::stoi(firstLine);
-        // if(!(oriDataFile >> numOfVar) || (numOfVar != 1 && numOfVar != 2)){
-        //     throw std::runtime_error("Invalid file format");
-        // }
 
         bool isOverwrite = isStart ? true:CheckOverWrite();
         
@@ -81,8 +74,6 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
             if(data.GetNumOfVar() != numOfVar)
                 throw std::runtime_error("Number of variable mismatch");
         }
-
-        //oriDataFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         std::string input;
         int line = 2;
