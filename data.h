@@ -91,6 +91,24 @@ public:
         std::cout << statis.RMSE << std::endl;
     }
 
+    void PrintColRwaData() const {
+        if(numberOfVariable == 1){
+            for(size_t i = 0; i < oriDataX.size(); ++i){
+                std::cout << "    " << (i + 1) << ". " << oriDataX[i] << "\n";
+            }
+        }
+        else if(numberOfVariable == 2){
+            if(oriDataX.size() != oriDataY.size())
+                throw std::runtime_error("Vector size mismatch");
+            for(size_t i = 0; i < oriDataX.size(); ++i){
+                std::cout << "    " << (i + 1) << ". {" << oriDataX[i] << ", " << oriDataY[i] << "}" << "\n";
+            }
+        }
+        else{
+            throw std::invalid_argument("Invalid number of variables");
+        }
+    }
+
     void AddData(const std::pair<std::string, std::string>& input, const COMMAND& cmd){
         if((cmd == COMMAND::ONE_NUMBER && numberOfVariable != 1) || (cmd == COMMAND::TWO_NUMBER && numberOfVariable != 2))
             throw std::invalid_argument("Number of variable mismatch");
@@ -106,6 +124,26 @@ public:
             std::stringstream ss;
             ss << x << " " << y;
             ss >> *this;
+        }
+    }
+
+    void RemoveData(const int index){
+        if(numberOfVariable == 1){
+            if(index < 0 || static_cast<size_t>(index) >= oriDataX.size())
+                throw std::invalid_argument("Index out of range");
+
+            oriDataX.erase(oriDataX.begin() + index);
+            oriDataY.erase(oriDataY.begin() + index);
+        }
+        else if(numberOfVariable == 2){
+            if(index < 0 || index >= oriDataX.size() || static_cast<size_t>(index) >= oriDataY.size())
+                throw std::invalid_argument("Index out of range");
+
+            oriDataX.erase(oriDataX.begin() + index);
+            oriDataY.erase(oriDataY.begin() + index);
+        }
+        else{
+            throw std::runtime_error("Invalid number of variables");
         }
     }
 

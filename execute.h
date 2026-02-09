@@ -53,7 +53,7 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                     std::pair<std::string, std::string> seperated = SeperateString(input);
                     if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmd);
-                    std::cout << GREEN << "Adding " << CYAN << std::stoi(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
+                    std::cout << GREEN << "Adding " << CYAN << std::stod(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
                 }
                 break;
             case COMMAND::TWO_NUMBER:
@@ -61,7 +61,7 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                     std::pair<std::string, std::string> seperated = SeperateString(input);
                     if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmd);
-                    std::cout << GREEN << "Adding {" << CYAN << std::stoi(seperated.first) << GREEN << ", " << CYAN << std::stoi(seperated.second) << GREEN << "} into data successfully"  << RESET << std::endl;
+                    std::cout << GREEN << "Adding {" << CYAN << std::stod(seperated.first) << GREEN << ", " << CYAN << std::stod(seperated.second) << GREEN << "} into data successfully"  << RESET << std::endl;
                 }
                 break;
             case COMMAND::WRITEIN:
@@ -92,6 +92,38 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
                 break;
+            case COMMAND::REMOVE:
+                {
+                    std::string inputIndex;
+                    data.PrintColRwaData();
+                    std::cout << "Please enter the index of the data you want to remove(Enter !" << PURPLE << "CANCLE" << RESET << " to cancle) : ";
+                    while(true){
+                        std::getline(std::cin, inputIndex);
+                        std::string temp = inputIndex;
+                        AllCaps(temp);
+                        RemoveSpace(temp);
+                        if(temp == "!CANCLE"){
+                            std::cout << RED << "Data Removing cancled\n" << RESET;
+                            break;
+                        }
+                        RemoveSpace(inputIndex);
+                        int index;
+                        auto[ptr, ec] = std::from_chars(inputIndex.data(), inputIndex.data() + inputIndex.size(), index);
+                        if(ec != std::errc() || ptr != inputIndex.data() + inputIndex.size()){
+                            std::cout << RED << "Invalid integer\nPlease reenter : " << RESET;
+                            continue;
+                        }
+                        try{
+                            index -= 1;
+                            data.RemoveData(index);
+                            break;
+                        }
+                        catch(const std::invalid_argument& e){
+                            std::cout  << RED << e.what() << "\nPlease reenter : " << RESET;
+                        }
+                    }
+                    break;
+                }
             case COMMAND::UNDEFINED:
                 std::cout << RED << "Invalid command, please try again!(Enter !help for help)" << RESET << std::endl;
                 break;

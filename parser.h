@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <charconv>
 
 #include "type.h"
 #include "data.h"
@@ -66,6 +67,16 @@ std::pair<std::string, std::string> SeperateString(const std::string& s){
     return {first, second};
 }
 
+void RemoveFrontNonNumber(std::string& s){
+    size_t pos = s.find_first_of(".0123456789");
+    if(pos == std::string::npos){
+        s.clear();
+    }
+    else{
+        s.erase(0, pos);
+    }
+}
+
 COMMAND Parser(const std::string& inputString){
     std::string cmd = inputString;
     AllCaps(cmd);
@@ -82,6 +93,7 @@ COMMAND Parser(const std::string& inputString){
     if(cmd == "!PRINTRMSE") return COMMAND::PRINT_RMSE;
     if(cmd == "!WRITEIN") return COMMAND::WRITEIN;
     if(cmd == "!WRITEOUT") return COMMAND::WRITEOUT;
+    if(cmd == "!REMOVE") return COMMAND::REMOVE;
     std::pair<std::string, std::string> seperated = SeperateString(inputString);
     if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()) return COMMAND::TWO_NUMBER;
     if(IsNumber(seperated.first) && seperated.second.empty()) return COMMAND::ONE_NUMBER;
@@ -105,6 +117,7 @@ void PrintHelp(bool isFirstTime){
     std::cout << "  !" << MAGENTA << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
     std::cout << "  !" << BLUE << "WRITEIN        " << RESET << ": Read data from " << GREEN << "\"##Raw Data\"" << RESET << " region in the file\n";
     std::cout << "  !" << BLUE << "WRITEOUT       " << RESET << ": Write data into the file\n";
+    std::cout << "  !" << PINK << "REMOVE         " << RESET << ": Remove a data entry by index\n\n";
     std::cout << "\n";
     std::cout << YELLOW << "Number input:\n" << RESET;
     std::cout << "  Enter numbers directly to add them to the dataset.\n";
