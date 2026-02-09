@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
@@ -58,9 +59,9 @@ std::string GetCommandString(const COMMAND& cmd){
         case COMMAND::PRINT_RMSE:
             return "Print RMSE";
         case COMMAND::WRITEIN:
-            return "Write In";
+            return "Write In File : ";
         case COMMAND::WRITEOUT:
-            return "Write Out";
+            return "Write Out File : ";
         case COMMAND::ONE_NUMBER:
             return "Add a number : ";
         case COMMAND::TWO_NUMBER:
@@ -68,8 +69,15 @@ std::string GetCommandString(const COMMAND& cmd){
         case COMMAND::UNDEFINED:
             return "Undefined Command";
         case COMMAND::REMOVE:
-            return "Remove";
+            return "Remove index : ";
         default:
             return "Undefined";
     }
 }
+
+struct CommandResult{
+
+    COMMAND cmd;
+    std::vector<std::string> args;
+
+};
