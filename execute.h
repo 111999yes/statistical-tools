@@ -5,9 +5,9 @@
 #include "parser.h"
 #include "file.h"
 
-void Execute(const COMMAND& cmd, const std::string& input, Data& data){
+void Execute(const CommandResult& cmdResult, Data& data){
     try{
-        switch(cmd){
+        switch(cmdResult.cmd){
             case COMMAND::HELP:
                 PrintHelp(0);
                 break;
@@ -50,17 +50,17 @@ void Execute(const COMMAND& cmd, const std::string& input, Data& data){
                 break;
             case COMMAND::ONE_NUMBER:
                 {
-                    std::pair<std::string, std::string> seperated = SeperateString(input);
+                    std::pair<std::string, std::string> seperated = {cmdResult.args[0], cmdResult.args[1]};
                     if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
-                    data.AddData(seperated, cmd);
+                    data.AddData(seperated, cmdResult.cmd);
                     std::cout << GREEN << "Adding " << CYAN << std::stod(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
                 }
                 break;
             case COMMAND::TWO_NUMBER:
                 {
-                    std::pair<std::string, std::string> seperated = SeperateString(input);
+                    std::pair<std::string, std::string> seperated = {cmdResult.args[0], cmdResult.args[1]};
                     if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
-                    data.AddData(seperated, cmd);
+                    data.AddData(seperated, cmdResult.cmd);
                     std::cout << GREEN << "Adding {" << CYAN << std::stod(seperated.first) << GREEN << ", " << CYAN << std::stod(seperated.second) << GREEN << "} into data successfully"  << RESET << std::endl;
                 }
                 break;

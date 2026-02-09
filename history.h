@@ -6,27 +6,25 @@
 
 class History{
 public:
-    void AddHistory(const std::string& input, const COMMAND& cmd, const std::string& successInput){
-        std::string inputCmd = GetCommandString(cmd);
-        if(cmd == COMMAND::ONE_NUMBER){
-            std::pair<std::string, std::string> seperated = SeperateString(input);
-            inputCmd += seperated.first;
+    void AddHistory(const CommandResult& cmdResult, const std::string& successInput){
+        std::string inputCmd = GetCommandString(cmdResult.cmd);
+        if(cmdResult.cmd == COMMAND::ONE_NUMBER){
+            inputCmd += cmdResult.args[0];
         }
-        else if(cmd == COMMAND::TWO_NUMBER){
-            std::pair<std::string, std::string> seperated = SeperateString(input);
+        else if(cmdResult.cmd == COMMAND::TWO_NUMBER){
             inputCmd += "{";
-            inputCmd += seperated.first;
+            inputCmd += cmdResult.args[0];
             inputCmd += ", ";
-            inputCmd += seperated.second;
+            inputCmd += cmdResult.args[1];
             inputCmd += "}";
         }
-        else if(cmd == COMMAND::REMOVE){
+        else if(cmdResult.cmd == COMMAND::REMOVE){
             inputCmd += successInput;
         }
-        else if(cmd == COMMAND::WRITEIN){
+        else if(cmdResult.cmd == COMMAND::WRITEIN){
             inputCmd += successInput;
         }
-        else if(cmd == COMMAND::WRITEOUT){
+        else if(cmdResult.cmd == COMMAND::WRITEOUT){
             inputCmd += successInput;
         }
         history.push_back(inputCmd);

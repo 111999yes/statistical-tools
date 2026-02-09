@@ -88,9 +88,9 @@ void RunApp(Data& data){
         std::cout << ">";
         std::getline(std::cin, input);
 
-        COMMAND cmd = Parser(input);
-        Execute(cmd, input, data);
+        CommandResult result = Parser(input);
+        Execute(result, data);
         
-        if(cmd == COMMAND::EXIT) break;
+        if(result.cmd == COMMAND::EXIT) break;
     }
 }

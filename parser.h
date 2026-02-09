@@ -77,28 +77,39 @@ void RemoveFrontNonNumber(std::string& s){
     }
 }
 
-COMMAND Parser(const std::string& inputString){
+CommandResult Parser(const std::string& inputString){
     std::string cmd = inputString;
+    CommandResult result;
     AllCaps(cmd);
     RemoveSpace(cmd);
-    if(cmd == "!HELP") return COMMAND::HELP;
-    if(cmd == "!EXIT") return COMMAND::EXIT;
-    if(cmd == "!CLEAR") return COMMAND::CLEAR;
-    if(cmd == "!PRINTALLDATA") return COMMAND::PRINT_ALL_DATA;
-    if(cmd == "!PRINTRAWDATA") return COMMAND::PRINT_RAW_DATA;
-    if(cmd == "!PRINTSTADATA") return COMMAND::PRINT_STA_DATA;
-    if(cmd == "!PRINTLINE") return COMMAND::PRINT_LINE;
-    if(cmd == "!PRINTR2") return COMMAND::PRINT_R2;
-    if(cmd == "!PRINTRSS") return COMMAND::PRINT_RSS;
-    if(cmd == "!PRINTRMSE") return COMMAND::PRINT_RMSE;
-    if(cmd == "!WRITEIN") return COMMAND::WRITEIN;
-    if(cmd == "!WRITEOUT") return COMMAND::WRITEOUT;
-    if(cmd == "!REMOVE") return COMMAND::REMOVE;
     std::pair<std::string, std::string> seperated = SeperateString(inputString);
-    if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()) return COMMAND::TWO_NUMBER;
-    if(IsNumber(seperated.first) && seperated.second.empty()) return COMMAND::ONE_NUMBER;
-    return COMMAND::UNDEFINED;
-
+    if(cmd == "!HELP") result.cmd = COMMAND::HELP;
+    else if(cmd == "!EXIT") result.cmd = COMMAND::EXIT;
+    else if(cmd == "!CLEAR") result.cmd = COMMAND::CLEAR;
+    else if(cmd == "!PRINTALLDATA") result.cmd = COMMAND::PRINT_ALL_DATA;
+    else if(cmd == "!PRINTRAWDATA") result.cmd = COMMAND::PRINT_RAW_DATA;
+    else if(cmd == "!PRINTSTADATA") result.cmd = COMMAND::PRINT_STA_DATA;
+    else if(cmd == "!PRINTLINE") result.cmd = COMMAND::PRINT_LINE;
+    else if(cmd == "!PRINTR2") result.cmd = COMMAND::PRINT_R2;
+    else if(cmd == "!PRINTRSS") result.cmd = COMMAND::PRINT_RSS;
+    else if(cmd == "!PRINTRMSE") result.cmd = COMMAND::PRINT_RMSE;
+    else if(cmd == "!WRITEIN") result.cmd = COMMAND::WRITEIN;
+    else if(cmd == "!WRITEOUT") result.cmd = COMMAND::WRITEOUT;
+    else if(cmd == "!REMOVE") result.cmd = COMMAND::REMOVE;
+    else if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()){
+        result.cmd = COMMAND::TWO_NUMBER;
+        result.args.push_back(seperated.first);
+        result.args.push_back(seperated.second);
+    }
+    else if(IsNumber(seperated.first) && seperated.second.empty()){
+        result.cmd = COMMAND::ONE_NUMBER;
+        result.args.push_back(seperated.first);
+        result.args.push_back(seperated.second);
+    }
+    else {
+        result.cmd = COMMAND::UNDEFINED;
+    }
+    return result;
 }
 
 void PrintHelp(bool isFirstTime){
