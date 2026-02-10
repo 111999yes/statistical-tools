@@ -102,6 +102,7 @@ CommandResult Parser(const std::string& inputString){
     else if(cmd == "!WRITEIN") result.cmd = COMMAND::WRITEIN;
     else if(cmd == "!WRITEOUT") result.cmd = COMMAND::WRITEOUT;
     else if(cmd == "!REMOVE") result.cmd = COMMAND::REMOVE;
+    else if(cmd == "!HISTORY") result.cmd = COMMAND::HISTORY;
     else if(IsNumber(seperated.first) && IsNumber(seperated.second) && !seperated.second.empty()){
         result.cmd = COMMAND::TWO_NUMBER;
         result.args.push_back(seperated.first);
@@ -122,9 +123,13 @@ void PrintHelp(bool isFirstTime){
     if(!isFirstTime) std::cout << CYAN << "=================================HELP=================================\n" << RESET;
     if(!isFirstTime) std::cout << "\n";
     std::cout << YELLOW << "Commands:\n" << RESET;
-    std::cout << "  !" << CYAN << "HELP           " << RESET << ": Show this help message\n";
+    std::cout << "  !" << GREEN << "HELP           " << RESET << ": Show this help message\n";
     std::cout << "  !" << RED << "EXIT           " << RESET << ": Exit current input loop\n";
-    std::cout << "  !" << GREEN << "CLEAR          " << RESET << ": Clear all data and reset variable count\n";
+    std::cout << "  !" << BLUE << "CLEAR          " << RESET << ": Clear all data and reset variable count\n";
+    std::cout << "  !" << BLUE << "WRITEIN        " << RESET << ": Read data from " << CYAN << "\"##Raw Data\"" << RESET << " region in the file\n";
+    std::cout << "  !" << BLUE << "WRITEOUT       " << RESET << ": Write data into the file\n";
+    std::cout << "  !" << BLUE << "REMOVE         " << RESET << ": Remove a data entry by index\n";
+    std::cout << "  !" << BLUE << "HISTORY        " << RESET << ": Print the command history\n";
     std::cout << "  !" << MAGENTA << "PRINTALLDATA   " << RESET << ": Print raw and statistical data\n";
     std::cout << "  !" << MAGENTA << "PRINTRAWDATA   " << RESET << ": Print only raw input data\n";
     std::cout << "  !" << MAGENTA << "PRINTSTADATA   " << RESET << ": Print only calculated statistics\n";
@@ -132,9 +137,6 @@ void PrintHelp(bool isFirstTime){
     std::cout << "  !" << MAGENTA << "PRINTR2        " << RESET << ": Print coefficient of determination (R^2)\n";
     std::cout << "  !" << MAGENTA << "PRINTRSS       " << RESET << ": Print residual sum of squares (RSS)\n";
     std::cout << "  !" << MAGENTA << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
-    std::cout << "  !" << BLUE << "WRITEIN        " << RESET << ": Read data from " << GREEN << "\"##Raw Data\"" << RESET << " region in the file\n";
-    std::cout << "  !" << BLUE << "WRITEOUT       " << RESET << ": Write data into the file\n";
-    std::cout << "  !" << PINK << "REMOVE         " << RESET << ": Remove a data entry by index\n\n";
     std::cout << "\n";
     std::cout << YELLOW << "Number input:\n" << RESET;
     std::cout << "  Enter numbers directly to add them to the dataset.\n";

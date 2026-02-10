@@ -222,7 +222,7 @@ void SetUpVariable(Data& data){
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
-        std::cout  << RED << ">Invalid input number, please retry\n" << RESET;
+        std::cout  << RED << "Invalid input number, please retry\n" << RESET;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }

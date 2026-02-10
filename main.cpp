@@ -8,6 +8,5 @@ int main(){
     StartApp(data);
     RunApp(data, history);
     EndApp(data);
-    std::cout << history << std::endl;
     return 0;
 }

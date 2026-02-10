@@ -148,6 +148,9 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                     }
                     break;
                 }
+            case COMMAND::HISTORY:
+                std::cout << history << std::endl;
+                break;
             case COMMAND::UNDEFINED:
                 std::cout << RED << "Invalid command, please try again!(Enter !help for help)" << RESET << std::endl;
                 break;

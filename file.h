@@ -112,7 +112,7 @@ bool CheckOverWrite(){
             return false;
         }
         else{
-            std::cout  << RED << ">Invalid command, please retry\n" << RESET;
+            std::cout  << RED << "Invalid command, please retry\n" << RESET;
             std::cin.clear();
         }
     }

@@ -33,6 +33,7 @@ enum class COMMAND{
     ONE_NUMBER,
     TWO_NUMBER,
     REMOVE,
+    HISTORY,
     UNDEFINED
 };
 
@@ -66,10 +67,12 @@ std::string GetCommandString(const COMMAND& cmd){
             return "Add a number : ";
         case COMMAND::TWO_NUMBER:
             return "Add two numbers : ";
-        case COMMAND::UNDEFINED:
-            return "Undefined Command";
         case COMMAND::REMOVE:
             return "Remove data : ";
+        case COMMAND::HISTORY:
+            return "Call command history";
+        case COMMAND::UNDEFINED:
+            return "Undefined command";
         default:
             return "Undefined";
     }

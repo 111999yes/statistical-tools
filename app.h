@@ -41,7 +41,7 @@ void StartApp(Data& data){
             break;
         }
         else{
-            std::cout  << RED << ">Invalid command, please retry\n" << RESET;
+            std::cout  << RED << "Invalid command, please retry\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -75,7 +75,7 @@ void EndApp(Data& data){
             break;
         }
         else{
-            std::cout  << RED << ">Invalid command, please retry\n" << RESET;
+            std::cout  << RED << "Invalid command, please retry\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
