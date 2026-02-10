@@ -69,7 +69,7 @@ std::string GetCommandString(const COMMAND& cmd){
         case COMMAND::UNDEFINED:
             return "Undefined Command";
         case COMMAND::REMOVE:
-            return "Remove index : ";
+            return "Remove data : ";
         default:
             return "Undefined";
     }

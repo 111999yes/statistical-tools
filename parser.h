@@ -77,6 +77,12 @@ void RemoveFrontNonNumber(std::string& s){
     }
 }
 
+std::string DoubleToString(double x){
+    std::ostringstream oss;
+    oss << x;
+    return oss.str();
+}
+
 CommandResult Parser(const std::string& inputString){
     std::string cmd = inputString;
     CommandResult result;

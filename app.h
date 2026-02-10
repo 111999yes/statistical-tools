@@ -82,14 +82,14 @@ void EndApp(Data& data){
     }
 }
 
-void RunApp(Data& data){
+void RunApp(Data& data, History& history){
     std::string input;
     while(true){
         std::cout << ">";
         std::getline(std::cin, input);
 
         CommandResult result = Parser(input);
-        Execute(result, data);
+        Execute(result, data, history);
         
         if(result.cmd == COMMAND::EXIT) break;
     }

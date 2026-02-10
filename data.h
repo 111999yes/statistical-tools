@@ -1,5 +1,6 @@
 #pragma once
 #include <sstream>
+#include <limits>
 
 #include "statisticsData.h"
 #include "type.h"
@@ -107,6 +108,24 @@ public:
         else{
             throw std::invalid_argument("Invalid number of variables");
         }
+    }
+
+    std::pair<double, double> GetData(const int index) const {
+        std::pair<double, double> result;
+        if(numberOfVariable == 1){
+            if(index < 0 || static_cast<size_t>(index) >= oriDataX.size())
+                throw std::invalid_argument("Index out of range");
+            result = {oriDataX[index], std::numeric_limits<double>::quiet_NaN()};
+        }
+        else if(numberOfVariable == 2){
+            if(index < 0 || index >= oriDataX.size() || static_cast<size_t>(index) >= oriDataY.size())
+                throw std::invalid_argument("Index out of range");
+            result = {oriDataX[index], oriDataY[index]};
+        }
+        else{
+            throw std::runtime_error("Invalid number of variables");
+        }
+        return result;
     }
 
     void AddData(const std::pair<std::string, std::string>& input, const COMMAND& cmd){

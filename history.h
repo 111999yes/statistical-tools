@@ -6,28 +6,8 @@
 
 class History{
 public:
-    void AddHistory(const CommandResult& cmdResult, const std::string& successInput){
-        std::string inputCmd = GetCommandString(cmdResult.cmd);
-        if(cmdResult.cmd == COMMAND::ONE_NUMBER){
-            inputCmd += cmdResult.args[0];
-        }
-        else if(cmdResult.cmd == COMMAND::TWO_NUMBER){
-            inputCmd += "{";
-            inputCmd += cmdResult.args[0];
-            inputCmd += ", ";
-            inputCmd += cmdResult.args[1];
-            inputCmd += "}";
-        }
-        else if(cmdResult.cmd == COMMAND::REMOVE){
-            inputCmd += successInput;
-        }
-        else if(cmdResult.cmd == COMMAND::WRITEIN){
-            inputCmd += successInput;
-        }
-        else if(cmdResult.cmd == COMMAND::WRITEOUT){
-            inputCmd += successInput;
-        }
-        history.push_back(inputCmd);
+    void AddHistory(const std::string& record){
+        history.push_back(record);
     }
 
     friend std::ostream& operator<<(std::ostream& os, const History& h){

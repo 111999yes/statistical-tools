@@ -4,9 +4,11 @@
 #include "type.h"
 #include "parser.h"
 #include "file.h"
+#include "history.h"
 
-void Execute(const CommandResult& cmdResult, Data& data){
+void Execute(const CommandResult& cmdResult, Data& data, History& history){
     try{
+        std::string record = GetCommandString(cmdResult.cmd);
         switch(cmdResult.cmd){
             case COMMAND::HELP:
                 PrintHelp(0);
@@ -53,6 +55,7 @@ void Execute(const CommandResult& cmdResult, Data& data){
                     std::pair<std::string, std::string> seperated = {cmdResult.args[0], cmdResult.args[1]};
                     if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmdResult.cmd);
+                    record += cmdResult.args[0];
                     std::cout << GREEN << "Adding " << CYAN << std::stod(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
                 }
                 break;
@@ -61,6 +64,11 @@ void Execute(const CommandResult& cmdResult, Data& data){
                     std::pair<std::string, std::string> seperated = {cmdResult.args[0], cmdResult.args[1]};
                     if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmdResult.cmd);
+                    record += "{";
+                    record += cmdResult.args[0];
+                    record += ", ";
+                    record += cmdResult.args[1];
+                    record += "}";
                     std::cout << GREEN << "Adding {" << CYAN << std::stod(seperated.first) << GREEN << ", " << CYAN << std::stod(seperated.second) << GREEN << "} into data successfully"  << RESET << std::endl;
                 }
                 break;
@@ -78,6 +86,7 @@ void Execute(const CommandResult& cmdResult, Data& data){
                         break;
                     }
                     WriteIn(fileName, data, false);
+                    record += fileName;
                     std::cout  << GREEN << "File loaded successfully\n" << RESET;
                 }
                 break;
@@ -88,6 +97,7 @@ void Execute(const CommandResult& cmdResult, Data& data){
                     std::cin >> fileName;
                     data.CalStatis();
                     WriteOut(fileName, data);
+                    record += fileName;
                     std::cout  << GREEN << "File save successfully\n" << RESET;
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
@@ -115,7 +125,21 @@ void Execute(const CommandResult& cmdResult, Data& data){
                         }
                         try{
                             index -= 1;
+                            std::pair<double, double> removedData = data.GetData(index);
                             data.RemoveData(index);
+                            if(std::isnan(removedData.second)){
+                                record += DoubleToString(removedData.first);
+                            }
+                            else{
+                                record += "{";
+                                record += DoubleToString(removedData.first);
+                                record += ", ";
+                                record += DoubleToString(removedData.second);
+                                record += "}";
+                            }
+                            record += " (index : ";
+                            record += std::to_string(index + 1);
+                            record += ")";
                             break;
                         }
                         catch(const std::invalid_argument& e){
@@ -130,6 +154,7 @@ void Execute(const CommandResult& cmdResult, Data& data){
             default:
                 break;
         }
+        history.AddHistory(record);
     }
     catch(const std::invalid_argument& e){
         std::cerr << RED << "Error executing " << GetCommandString(cmdResult.cmd) << " : " << e.what() << std::endl;
