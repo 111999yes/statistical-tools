@@ -94,3 +94,9 @@ void RunApp(Data& data, History& history){
         if(result.cmd == COMMAND::EXIT) break;
     }
 }
+
+void init(){
+    std::cout << ORANGE << "=============================INTRODUCTION=============================\n\n" << RESET;
+    PrintHelp(1);
+    std::cout << ORANGE << "\n======================================================================\n" << RESET;
+}

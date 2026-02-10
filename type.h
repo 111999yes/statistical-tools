@@ -38,44 +38,64 @@ enum class COMMAND{
 };
 
 std::string GetCommandString(const COMMAND& cmd){
+    std::string result;
     switch(cmd){
         case COMMAND::HELP:
-            return "Help";
+            result = std::string(GREEN) + "Help" + std::string(RESET);
+            break;
         case COMMAND::EXIT:
-            return "Exit";
+            result = std::string(RED) + "Exit" + std::string(RESET);
+            break;
         case COMMAND::CLEAR:
-            return "Clear";
-        case COMMAND::PRINT_ALL_DATA:
-            return "Print All Data";
-        case COMMAND::PRINT_RAW_DATA:
-            return "Print Raw Data";
-        case COMMAND::PRINT_STA_DATA:
-            return "Print Sts Data";
-        case COMMAND::PRINT_LINE:
-            return "Print Line";
-        case COMMAND::PRINT_R2:
-            return "Print R2";
-        case COMMAND::PRINT_RSS:
-            return "Print RSS";
-        case COMMAND::PRINT_RMSE:
-            return "Print RMSE";
+            result = std::string(BLUE) + "Clear" + std::string(RESET);
+            break;
         case COMMAND::WRITEIN:
-            return "Write In File : ";
+            result = std::string(BLUE) + "Write In File" + std::string(RESET);
+            break;
         case COMMAND::WRITEOUT:
-            return "Write Out File : ";
-        case COMMAND::ONE_NUMBER:
-            return "Add a number : ";
-        case COMMAND::TWO_NUMBER:
-            return "Add two numbers : ";
+            result = std::string(BLUE) + "Write Out File" + std::string(RESET);
+            break;
         case COMMAND::REMOVE:
-            return "Remove data : ";
+            result = std::string(BLUE) + "Remove data" + std::string(RESET);
+            break;
         case COMMAND::HISTORY:
-            return "Call command history";
+            result = std::string(BLUE) + "Call command history" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_ALL_DATA:
+            result = std::string(MAGENTA) + "Print All Data" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_RAW_DATA:
+            result = std::string(MAGENTA) + "Print Raw Data" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_STA_DATA:
+            result = std::string(MAGENTA) + "Print Sts Data" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_LINE:
+            result = std::string(MAGENTA) + "Print Line" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_R2:
+            result = std::string(MAGENTA) + "Print R2" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_RSS:
+            result = std::string(MAGENTA) + "Print RSS" + std::string(RESET);
+            break;
+        case COMMAND::PRINT_RMSE:
+            result = std::string(MAGENTA) + "Print RMSE" + std::string(RESET);
+            break;
+        case COMMAND::ONE_NUMBER:
+            result = std::string(CYAN) + "Add a number" + std::string(RESET);
+            break;
+        case COMMAND::TWO_NUMBER:
+            result = std::string(CYAN) + "Add two numbers" + std::string(RESET);
+            break;
         case COMMAND::UNDEFINED:
-            return "Undefined command";
+            result = std::string(RED) + "Undefined" + std::string(RESET);
+            break;
         default:
-            return "Undefined";
+            result = std::string(RED) + "Undefined" + std::string(RESET);
+            break;
     }
+    return result;
 }
 
 struct CommandResult{

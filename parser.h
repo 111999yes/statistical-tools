@@ -17,7 +17,7 @@ void AllCaps(std::string& s){
 void RemoveSpace(std::string& s){
     std::string result;
     for(size_t i = 0; i < s.size(); ++i){
-        if(s[i] != ' '){
+        if(s[i] != ' ' && s[i] != '\t'){
             result += s[i];
         }
     }

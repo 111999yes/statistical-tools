@@ -23,16 +23,22 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                 break;
             case COMMAND::PRINT_ALL_DATA:
                 data.CalStatis();
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 data.PrintRawData();
                 data.PrintStaData();
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 break;
             case COMMAND::PRINT_RAW_DATA:
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 data.CalStatis();
                 data.PrintRawData();
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 break;
             case COMMAND::PRINT_STA_DATA:
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 data.CalStatis();
                 data.PrintStaData();
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 break;
             case COMMAND::PRINT_LINE:
                 data.CalStatis();
@@ -55,6 +61,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                     std::pair<std::string, std::string> seperated = {cmdResult.args[0], cmdResult.args[1]};
                     if(data.GetNumOfVar() != 1) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmdResult.cmd);
+                    record += " : ";
                     record += cmdResult.args[0];
                     std::cout << GREEN << "Adding " << CYAN << std::stod(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
                 }
@@ -64,6 +71,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                     std::pair<std::string, std::string> seperated = {cmdResult.args[0], cmdResult.args[1]};
                     if(data.GetNumOfVar() != 2) throw std::invalid_argument("Number of variable mismatch");
                     data.AddData(seperated, cmdResult.cmd);
+                    record += " : ";
                     record += "{";
                     record += cmdResult.args[0];
                     record += ", ";
@@ -86,6 +94,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                         break;
                     }
                     WriteIn(fileName, data, false);
+                    record += " : ";
                     record += fileName;
                     std::cout  << GREEN << "File loaded successfully\n" << RESET;
                 }
@@ -97,6 +106,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                     std::cin >> fileName;
                     data.CalStatis();
                     WriteOut(fileName, data);
+                    record += " : ";
                     record += fileName;
                     std::cout  << GREEN << "File save successfully\n" << RESET;
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -127,6 +137,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                             index -= 1;
                             std::pair<double, double> removedData = data.GetData(index);
                             data.RemoveData(index);
+                            record += " : ";
                             if(std::isnan(removedData.second)){
                                 record += DoubleToString(removedData.first);
                             }
@@ -149,7 +160,9 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                     break;
                 }
             case COMMAND::HISTORY:
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 std::cout << history << std::endl;
+                std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
                 break;
             case COMMAND::UNDEFINED:
                 std::cout << RED << "Invalid command, please try again!(Enter !help for help)" << RESET << std::endl;
@@ -160,13 +173,13 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
         history.AddHistory(record);
     }
     catch(const std::invalid_argument& e){
-        std::cerr << RED << "Error executing " << GetCommandString(cmdResult.cmd) << " : " << e.what() << std::endl;
+        std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
     }
     catch(const std::runtime_error& e){
-        std::cerr << RED << "Error executing " << GetCommandString(cmdResult.cmd) << " : " << e.what() << std::endl;
+        std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
     }
     catch(const std::logic_error& e){
-        std::cerr << RED << "Error executing " << GetCommandString(cmdResult.cmd) << " : " << e.what() << std::endl;
+        std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
     }
 }
 

@@ -11,8 +11,9 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const History& h){
+        os << YELLOW << "History :" << RESET << "\n";
         for(size_t i = 0; i < h.history.size(); ++i){
-            os << (i + 1) << ".  " << h.history[i] << ((i == h.history.size() - 1) ? "" : "\n");
+            os  << "    " << (i + 1) << ".  " << h.history[i] << ((i == h.history.size() - 1) ? "" : "\n");
         }
         return os;
     }

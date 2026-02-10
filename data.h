@@ -40,7 +40,7 @@ public:
 
     void CalStatis(){
         if(oriDataX.empty())
-            throw std::runtime_error("No data yo calculate");
+            throw std::runtime_error("No data to calculate");
         statis.minimum[0] = Minimum(oriDataX);
         statis.minimum[1] = Minimum(oriDataY);
         statis.maximum[0] = Maximum(oriDataX);
@@ -74,22 +74,22 @@ public:
 
     void PrintLine() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << statis.reLine << std::endl;
+        std::cout << CYAN << "Regression line : " << statis.reLine << RESET << std::endl;
     }
 
     void PrintR2() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << statis.RSquare << std::endl;
+        std::cout << CYAN << "R^2 = "<< statis.RSquare << RESET << std::endl;
     }
 
     void PrintRSS() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << statis.RSS << std::endl;
+        std::cout << CYAN << "RSS = " << statis.RSS << RESET << std::endl;
     }
 
     void PrintRMSE() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << statis.RMSE << std::endl;
+        std::cout << CYAN << "RMSE = "<< statis.RMSE << RESET << std::endl;
     }
 
     void PrintColRwaData() const {
