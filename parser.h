@@ -6,42 +6,33 @@
 #include "type.h"
 #include "data.h"
 
-void AllCaps(std::string& s){
-    for(size_t i = 0; i < s.size(); ++i){
-        if(s[i] >= 'a' && s[i] <= 'z'){
-            s[i] = s[i] - 'a' + 'A';
-        }
-    }
+inline void AllCaps(std::string& s){
+    std::transform(s.begin(), s.end(), s.begin(), ::toupper);
 }
 
-void RemoveSpace(std::string& s){
-    std::string result;
-    for(size_t i = 0; i < s.size(); ++i){
-        if(s[i] != ' ' && s[i] != '\t'){
-            result += s[i];
-        }
-    }
-    s = result;
+inline void RemoveSpace(std::string& s){
+    s.erase(std::remove_if(s.begin(), s.end(), [](unsigned char c){return std::isspace(c); }), s.end());
 }
 
-bool IsNumber(const std::string& s){
-    try{
-        size_t idx;
-        std::stod(s, &idx);
-        return s.size() == idx;
-    }
-    catch(...){
-        return false;
-    }
-}
-
-void RemoveFrontSpace(std::string& s){
+inline void RemoveFrontSpace(std::string& s){
     size_t pos = s.find_first_not_of(" \t\n\r");
-    if(pos == std::string::npos){
-        s.clear();
-    }else{
-        s.erase(0, pos);
-    }
+    if(pos == std::string::npos) s.clear();
+    else s.erase(0, pos);
+    
+}
+
+inline void RemoveFrontNonNumber(std::string& s){
+    size_t pos = s.find_first_of(".0123456789");
+    if(pos == std::string::npos) s.clear();
+    else s.erase(0, pos);
+    
+}
+
+inline bool IsNumber(const std::string& s){
+    if(s.empty()) return false;
+    char* endPtr = nullptr;
+    std::strtod(s.c_str(), &endPtr);
+    return endPtr == s.c_str() + s.size();
 }
 
 std::pair<std::string, std::string> SeperateString(const std::string& s){
@@ -65,16 +56,6 @@ std::pair<std::string, std::string> SeperateString(const std::string& s){
     }
     RemoveFrontSpace(first);
     return {first, second};
-}
-
-void RemoveFrontNonNumber(std::string& s){
-    size_t pos = s.find_first_of(".0123456789");
-    if(pos == std::string::npos){
-        s.clear();
-    }
-    else{
-        s.erase(0, pos);
-    }
 }
 
 std::string DoubleToString(double x){
