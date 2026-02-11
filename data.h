@@ -4,6 +4,7 @@
 
 #include "statisticsData.h"
 #include "type.h"
+#include "message.h"
 
 
 class Data{
@@ -14,7 +15,7 @@ public:
     }
 
     void SetNumberOfVariable(int _numberVar){
-        if(_numberVar > 2 || _numberVar < 1) throw std::invalid_argument("Number of variable must be 1 or 2");
+        if(_numberVar != 2 && _numberVar != 1) throw std::invalid_argument("Number of variable must be 1 or 2");
         else{
             numberOfVariable = _numberVar;
             statis.numOfVar = _numberVar;
@@ -40,7 +41,7 @@ public:
 
     void CalStatis(){
         if(oriDataX.empty())
-            throw std::runtime_error("No data to calculate");
+            throw std::logic_error("No data to calculate");
         statis.minimum[0] = Minimum(oriDataX);
         statis.minimum[1] = Minimum(oriDataY);
         statis.maximum[0] = Maximum(oriDataX);
@@ -106,7 +107,7 @@ public:
             }
         }
         else{
-            throw std::invalid_argument("Invalid number of variables");
+            throw std::logic_error("Invalid number of variables");
         }
     }
 
@@ -123,7 +124,7 @@ public:
             result = {oriDataX[index], oriDataY[index]};
         }
         else{
-            throw std::runtime_error("Invalid number of variables");
+            throw std::logic_error("Invalid number of variables");
         }
         return result;
     }
@@ -162,7 +163,7 @@ public:
             oriDataY.erase(oriDataY.begin() + index);
         }
         else{
-            throw std::runtime_error("Invalid number of variables");
+            throw std::logic_error("Invalid number of variables");
         }
     }
 
@@ -214,16 +215,22 @@ private:
 
 void SetUpVariable(Data& data){
     int num;
+    std::cout << Output::Prompt("Please enter the number of variables : ");
     while(true){
-        std::cout << GREEN << "Please enter the number of variables : " << RESET;
-        if(std::cin >> num && (num == 1 || num == 2)){
+        try{
+            if(!(std::cin >> num)){
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw std::invalid_argument("Invalid input number");
+            }
             data.clear();
             data.SetNumberOfVariable(num);
+            std::cout << Output::Success("Set up successfully") << "\n";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
-        std::cout  << RED << "Invalid input number, please retry\n" << RESET;
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        catch(const std::exception& e){
+            std::cout << Output::Error(e.what()) << ", please retry : ";
+        }
     }
 }

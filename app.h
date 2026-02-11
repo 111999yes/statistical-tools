@@ -4,80 +4,83 @@
 
 void StartApp(Data& data){
     init();
-    std::cout << "Do you want to load file? (Enter[y/n]) \n";
+    std::cout << Output::Prompt("Do you want to load file? (Enter[y/n]) : ");
     while(true){
-        std::cout << ">";
         std::string s;
         bool isCancle = false;
-        std::cin >> s;
+        std::getline(std::cin, s);
         AllCaps(s);
         RemoveSpace(s);
-        if(s == "Y" || s == "YES"){
-            while(true){
-                std::string fileName;
-                std::cout << "Please enter the file name(Enter !" << PURPLE << "CANCLE" << RESET << " to cancle) : ";
-                std::cin >> fileName;
-                std::string temp = fileName;
-                AllCaps(temp);
-                RemoveSpace(temp);
-                if(temp == "!CANCLE"){
-                    isCancle = true;
-                    break;
+        try{
+            if(s == "Y" || s == "YES"){
+                while(true){
+                    std::string fileName;
+                    std::cout << Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
+                    std::getline(std::cin, fileName);
+                    std::string temp = fileName;
+                    AllCaps(temp);
+                    RemoveSpace(temp);
+                    if(temp == "!CANCLE"){
+                        isCancle = true;
+                        break;
+                    }
+                    try{
+                        WriteIn(fileName, data, true);
+                        std::cout << Output::Success("File loaded successfully") << "\n";
+                        break;
+                    }
+                    catch(const std::runtime_error& e){
+                        std::cout << Output::Error(e.what()) << "\n";
+                    }
                 }
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                try{
-                    WriteIn(fileName, data, true);
-                    std::cout  << GREEN << "File loaded successfully\n" << RESET;
-                    break;
-                }
-                catch(const std::runtime_error& e){
-                    std::cout << RED << "Problem happens : " << e.what() << "\n" << RESET;
-                }
+                if(!isCancle) break;
             }
-            if(!isCancle) break;
+            if(s == "N" || s == "NO" || isCancle){
+                SetUpVariable(data);
+                break;
+            }
+            else{
+                throw std::invalid_argument("Invalid command");
+            }
         }
-        if(s == "N" || s == "NO" || isCancle){
-            SetUpVariable(data);
-            break;
-        }
-        else{
-            std::cout  << RED << "Invalid command, please retry\n" << RESET;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        catch(const std::exception& e){
+            std::cout << Output::Error(e.what()) << ", please retry : ";
         }
     }
 }
 
 void EndApp(Data& data){
-    std::cout << "Do you want to save the data? (Enter [y/n]) \n";
+    std::cout << Output::Prompt("Do you want to save the data? (Enter [y/n]) : ");
     while(true){
-        std::cout << ">";
-        std::string s;
-        std::cin >> s;
-        AllCaps(s);
-        RemoveSpace(s);
-        if(s == "Y" || s == "YES"){
-            data.CalStatis();
-            std::string fileName;
-            std::cout << "Please enter the file name : ";
-            std::cin >> fileName;
-            try{
-                WriteOut(fileName, data);
-                std::cout  << GREEN << "File save successfully\n" << RESET;
+        try{
+            std::string s;
+            std::getline(std::cin, s);
+            AllCaps(s);
+            RemoveSpace(s);
+            if(s == "Y" || s == "YES"){
+                data.CalStatis();
+                std::string fileName;
+                std::cout << Output::Prompt("Please enter the file name : ");
+                std::getline(std::cin, fileName);
+                try{
+                    WriteOut(fileName, data);
+                    std::cout << Output::Success("File save successfully") << "\n";
+                    break;
+                }
+                catch(const std::runtime_error& e){
+                    std::cout << Output::Error(e.what()) << ", please retry : ";
+                }
             }
-            catch(const std::runtime_error& e){
-                std::cout << RED << "Problem happens : " << e.what() << "\n" << RESET;
+            else if(s == "N" || s == "NO"){
+                std::cout << Output::Prompt("Bye!") << "\n";
+                break;
             }
-            break;
+            else{
+                throw std::invalid_argument("Invalid command");
+            }
         }
-        else if(s == "N" || s == "NO"){
-            std::cout << BLUE << "Bye!\n" << RESET;
-            break;
-        }
-        else{
-            std::cout  << RED << "Invalid command, please retry\n" << RESET;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        catch(const std::exception& e){
+            std::cout << Output::Error(e.what()) << ", please retry : ";
         }
     }
 }

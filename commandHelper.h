@@ -5,6 +5,12 @@
 #include "parser.h"
 #include "file.h"
 #include "history.h"
+#include "message.h"
+
+const std::string SEPERATELINE = "======================================================================";
+inline void PrintSeperateLine(){
+    std::cout << ORANGE << "\n" << SEPERATELINE << "\n\n" << RESET;
+}
 
 namespace COMMAND_HELPER{
 
@@ -13,35 +19,35 @@ namespace COMMAND_HELPER{
     }
 
     void HandleExit(){
-        std::cout << GREEN << "Exit successfully!" << RESET << std::endl;
+        std::cout << Output::Success("Exit successfully!") << "\n";
     }
 
     void HandleClear(Data& data){
         data.clear();
-        std::cout << GREEN << "Clear successfully" << RESET << std::endl;
+        std::cout << Output::Success("Clear successfully") << "\n";
         SetUpVariable(data);
     }
 
     void HandlePrint_AllData(Data& data){
         data.CalStatis();
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
         data.PrintRawData();
         data.PrintStaData();
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
     }
 
     void HandlePrint_RawData(Data& data){
         data.CalStatis();
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
         data.PrintRawData();
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
     }
 
     void HandlePrint_StaData(Data& data){
         data.CalStatis();
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
         data.PrintStaData();
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
     }
 
     void HandlePrint_Line(Data& data){
@@ -70,7 +76,7 @@ namespace COMMAND_HELPER{
         data.AddData(seperated, cmdResult.cmd);
         record += " : ";
         record += cmdResult.args[0];
-        std::cout << GREEN << "Adding " << CYAN << std::stod(seperated.first) << GREEN << " into data successfully"  << RESET << std::endl;
+        std::cout << Output::Success("Adding " + std::string(CYAN) + DoubleToString(std::stod(seperated.first)) + std::string(RESET) + " into data successfully") << "\n";
     }
 
     void HandleAdd_TwoNumber(Data& data, std::string& record, const CommandResult& cmdResult){
@@ -83,60 +89,59 @@ namespace COMMAND_HELPER{
         record += ", ";
         record += cmdResult.args[1];
         record += "}";
-        std::cout << GREEN << "Adding {" << CYAN << std::stod(seperated.first) << GREEN << ", " << CYAN << std::stod(seperated.second) << GREEN << "} into data successfully"  << RESET << std::endl;
+        std::cout << Output::Success("Adding {" + std::string(CYAN) + DoubleToString(std::stod(seperated.first)) + std::string(RESET) + ", " + std::string(CYAN) + DoubleToString(std::stod(seperated.second)) + std::string(RESET) + "} into data successfully") << "\n";
     }
 
     void HandleWriteIn(Data& data, std::string& record){
         std::string fileName;
-        std::cout << "Please enter the file name(Enter !" << PURPLE << "CANCLE" << RESET << " to cancle) : ";
+        std::cout << Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
         std::cin >> fileName;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::string temp = fileName;
         AllCaps(temp);
         RemoveSpace(temp);
         if(temp == "!CANCLE"){
-            std::cout << RED << "File loading cancled\n" << RESET;
+            std::cout << Output::Prompt("File loading cancled") << "\n";
             return;
         }
         WriteIn(fileName, data, false);
         record += " : ";
         record += fileName;
-        std::cout  << GREEN << "File loaded successfully\n" << RESET;
+        std::cout << Output::Success("File \"" + fileName + "\" loaded successfully") << "\n";
     }
 
     void HandleWriteOut(Data& data, std::string& record){
         std::string fileName;
-        std::cout << "Please enter the file name : ";
+        std::cout << Output::Prompt("Please enter the file name : ");
         std::cin >> fileName;
         data.CalStatis();
         WriteOut(fileName, data);
         record += " : ";
         record += fileName;
-        std::cout  << GREEN << "File save successfully\n" << RESET;
+        std::cout << Output::Success("File \"" + fileName + "\" save successfully") << "\n";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     void HandleRemove(Data& data, std::string& record){
         std::string inputIndex;
         data.PrintColRwaData();
-        std::cout << "Please enter the index of the data you want to remove(Enter !" << PURPLE << "CANCLE" << RESET << " to cancle) : ";
+        std::cout << Output::Prompt("Please enter the index of the data you want to remove(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
         while(true){
             std::getline(std::cin, inputIndex);
             std::string temp = inputIndex;
             AllCaps(temp);
             RemoveSpace(temp);
             if(temp == "!CANCLE"){
-                std::cout << RED << "Data Removing cancled\n" << RESET;
+                std::cout << Output::Prompt("Data Removing cancled") << "\n";
                 break;
             }
             RemoveSpace(inputIndex);
-            int index;
-            auto[ptr, ec] = std::from_chars(inputIndex.data(), inputIndex.data() + inputIndex.size(), index);
-            if(ec != std::errc() || ptr != inputIndex.data() + inputIndex.size()){
-                std::cout << RED << "Invalid integer\nPlease reenter : " << RESET;
-                continue;
-            }
             try{
+                int index;
+                auto[ptr, ec] = std::from_chars(inputIndex.data(), inputIndex.data() + inputIndex.size(), index);
+                if(ec != std::errc() || ptr != inputIndex.data() + inputIndex.size()){
+                    throw std::invalid_argument("Invalid integer");
+                }
                 index -= 1;
                 std::pair<double, double> removedData = data.GetData(index);
                 data.RemoveData(index);
@@ -157,15 +162,14 @@ namespace COMMAND_HELPER{
                 break;
             }
             catch(const std::invalid_argument& e){
-                std::cout  << RED << e.what() << "\nPlease reenter : " << RESET;
+                std::cout << Output::Error(std::string(e.what()) + ", please retr" + "(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
             }
         }
     }
 
     void HandleHistory(const History& history){
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
+        PrintSeperateLine();
         std::cout << history << std::endl;
-        std::cout << ORANGE << "\n======================================================================\n\n" << RESET;
-
+        PrintSeperateLine();
     }
 }

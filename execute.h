@@ -55,13 +55,14 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                 COMMAND_HELPER::HandleHistory(history);
                 break;
             case COMMAND::UNDEFINED:
-                std::cout << RED << "Invalid command, please try again!(Enter !help for help)" << RESET << std::endl;
+                throw std::invalid_argument("Invalid command, please try again!(Enter !" + std::string(PURPLE) + "help" + std::string(RED) + " for help)");
                 break;
             default:
                 break;
         }
         history.AddHistory(record);
     }
+    //TODO
     catch(const std::invalid_argument& e){
         std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
     }

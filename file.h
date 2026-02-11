@@ -6,6 +6,7 @@
 
 #include "data.h"
 #include "parser.h"
+#include "message.h"
 
 bool CheckOverWrite();
 void init();
@@ -51,7 +52,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
     }
 
     if(!inRawDataBlock){
-        throw std::runtime_error("No readable data found in file");
+        throw std::logic_error("No readable data found in file");
     }
 
     if(inRawDataBlock){
@@ -59,7 +60,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
         std::getline(oriDataFile, firstLine);
         RemoveSpace(firstLine);
         if(firstLine != "1" && firstLine != "2"){
-            throw std::runtime_error("Invalid file format");
+            throw std::invalid_argument("Invalid file format: number of variables not 1 or 2");
         }
         int numOfVar = std::stoi(firstLine);
 
@@ -72,7 +73,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
         }
         else{
             if(data.GetNumOfVar() != numOfVar)
-                throw std::runtime_error("Number of variable mismatch");
+                throw std::invalid_argument("Number of variable mismatch with existing data");
         }
 
         std::string input;
@@ -90,7 +91,8 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
                 }
             }
             catch(const std::invalid_argument& e){
-                std::cout << "Wrong input at line " << line << "\n "<< "Problem : " << e.what() << "\n";
+                std::cout << Output::Error("Wrong input at line " + std::to_string(line)) << "\n";
+                std::cout << Output::Error(e.what()) << "\n";
             }
             line++;
         }
@@ -99,21 +101,25 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
 }
 
 bool CheckOverWrite(){
-    std::cout << "Do you want ot overwrite current data? (Enter[y/n])\n";
+    std::cout << Output::Prompt("Do you want ot overwrite current data? (Enter[y/n]) : ");
     std::string s;
     while(true){
-        getline(std::cin, s);
-        AllCaps(s);
-        RemoveSpace(s);
-        if(s == "Y" || s == "YES"){
-            return true;
+        try{
+            getline(std::cin, s);
+            AllCaps(s);
+            RemoveSpace(s);
+            if(s == "Y" || s == "YES"){
+                return true;
+            }
+            else if(s == "N" || s == "NO"){
+                return false;
+            }
+            else{
+                throw std::invalid_argument("Invalid command, please retry : ");
+            }
         }
-        else if(s == "N" || s == "NO"){
-            return false;
-        }
-        else{
-            std::cout  << RED << "Invalid command, please retry\n" << RESET;
-            std::cin.clear();
+        catch(const std::exception& e){
+            std::cout << Output::Error(e.what());
         }
     }
     
@@ -130,7 +136,7 @@ std::stringstream Data::WriteOutRawData() const {
         ss << "#Raw Data :\n";
         for(size_t i = 0; i < oriDataX.size(); ++i) ss << "    " << (i + 1) << ". " << oriDataX[i] << "\n";
     }
-    else throw std::logic_error("numberOfVariable not set");
+    else throw std::logic_error("Invalid number of variables");
     return ss;
 }
 
