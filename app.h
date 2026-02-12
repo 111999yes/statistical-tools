@@ -4,7 +4,7 @@
 
 void StartApp(Data& data){
     init();
-    std::cout << Output::Prompt("Do you want to load file? (Enter[y/n]) : ");
+    Output::Prompt("Do you want to load file? (Enter[y/n]) : ");
     while(true){
         std::string s;
         bool isCancle = false;
@@ -15,7 +15,7 @@ void StartApp(Data& data){
             if(s == "Y" || s == "YES"){
                 while(true){
                     std::string fileName;
-                    std::cout << Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
+                    Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
                     std::getline(std::cin, fileName);
                     std::string temp = fileName;
                     AllCaps(temp);
@@ -26,11 +26,11 @@ void StartApp(Data& data){
                     }
                     try{
                         WriteIn(fileName, data, true);
-                        std::cout << Output::Success("File loaded successfully") << "\n";
+                        Output::Success(std::string("File loaded successfully") + Output::NEWLINE);
                         break;
                     }
                     catch(const std::runtime_error& e){
-                        std::cout << Output::Error(e.what()) << "\n";
+                        Output::Error(std::string(e.what()) + Output::NEWLINE);
                     }
                 }
                 if(!isCancle) break;
@@ -44,13 +44,13 @@ void StartApp(Data& data){
             }
         }
         catch(const std::exception& e){
-            std::cout << Output::Error(e.what()) << ", please retry : ";
+            Output::Error(std::string(e.what()) + std::string(", please retry : "));
         }
     }
 }
 
 void EndApp(Data& data){
-    std::cout << Output::Prompt("Do you want to save the data? (Enter [y/n]) : ");
+    Output::Prompt("Do you want to save the data? (Enter [y/n]) : ");
     while(true){
         try{
             std::string s;
@@ -60,19 +60,19 @@ void EndApp(Data& data){
             if(s == "Y" || s == "YES"){
                 data.CalStatis();
                 std::string fileName;
-                std::cout << Output::Prompt("Please enter the file name : ");
+                Output::Prompt("Please enter the file name : ");
                 std::getline(std::cin, fileName);
                 try{
                     WriteOut(fileName, data);
-                    std::cout << Output::Success("File save successfully") << "\n";
+                    Output::Success(std::string("File save successfully") + Output::NEWLINE);
                     break;
                 }
                 catch(const std::runtime_error& e){
-                    std::cout << Output::Error(e.what()) << ", please retry : ";
+                    Output::Error(std::string(e.what()) + std::string(", please retry : "));
                 }
             }
             else if(s == "N" || s == "NO"){
-                std::cout << Output::Prompt("Bye!") << "\n";
+                Output::Prompt(std::string("Bye!") + Output::NEWLINE);
                 break;
             }
             else{
@@ -80,7 +80,7 @@ void EndApp(Data& data){
             }
         }
         catch(const std::exception& e){
-            std::cout << Output::Error(e.what()) << ", please retry : ";
+            Output::Error(std::string(e.what()) + std::string(", please retry : "));
         }
     }
 }
@@ -88,7 +88,7 @@ void EndApp(Data& data){
 void RunApp(Data& data, History& history){
     std::string input;
     while(true){
-        std::cout << ">";
+        Output::Input();
         std::getline(std::cin, input);
 
         CommandResult result = Parser(input);
@@ -96,10 +96,4 @@ void RunApp(Data& data, History& history){
         
         if(result.cmd == COMMAND::EXIT) break;
     }
-}
-
-void init(){
-    std::cout << ORANGE << "=============================INTRODUCTION=============================\n\n" << RESET;
-    PrintHelp(1);
-    std::cout << ORANGE << "\n======================================================================\n" << RESET;
 }

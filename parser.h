@@ -99,34 +99,3 @@ CommandResult Parser(const std::string& inputString){
     }
     return result;
 }
-
-void PrintHelp(bool isFirstTime){
-    if(!isFirstTime) std::cout << CYAN << "=================================HELP=================================\n" << RESET;
-    if(!isFirstTime) std::cout << "\n";
-    std::cout << YELLOW << "Commands:\n" << RESET;
-    std::cout << "  !" << GREEN << "HELP           " << RESET << ": Show this help message\n";
-    std::cout << "  !" << RED << "EXIT           " << RESET << ": Exit current input loop\n";
-    std::cout << "  !" << BLUE << "CLEAR          " << RESET << ": Clear all data and reset variable count\n";
-    std::cout << "  !" << BLUE << "WRITEIN        " << RESET << ": Read data from " << CYAN << "\"##Raw Data\"" << RESET << " region in the file\n";
-    std::cout << "  !" << BLUE << "WRITEOUT       " << RESET << ": Write data into the file\n";
-    std::cout << "  !" << BLUE << "REMOVE         " << RESET << ": Remove a data entry by index\n";
-    std::cout << "  !" << BLUE << "HISTORY        " << RESET << ": Print the command history\n";
-    std::cout << "  !" << MAGENTA << "PRINTALLDATA   " << RESET << ": Print raw and statistical data\n";
-    std::cout << "  !" << MAGENTA << "PRINTRAWDATA   " << RESET << ": Print only raw input data\n";
-    std::cout << "  !" << MAGENTA << "PRINTSTADATA   " << RESET << ": Print only calculated statistics\n";
-    std::cout << "  !" << MAGENTA << "PRINTLINE      " << RESET << ": Print the regression line\n";
-    std::cout << "  !" << MAGENTA << "PRINTR2        " << RESET << ": Print coefficient of determination (R^2)\n";
-    std::cout << "  !" << MAGENTA << "PRINTRSS       " << RESET << ": Print residual sum of squares (RSS)\n";
-    std::cout << "  !" << MAGENTA << "PRINTRMSE      " << RESET << ": Print root mean square error (RMSE)\n";
-    std::cout << "\n";
-    std::cout << YELLOW << "Number input:\n" << RESET;
-    std::cout << "  Enter numbers directly to add them to the dataset.\n";
-    std::cout << "  For single-variable data, enter one number at a time.\n";
-    std::cout << "  For two-variable data, enter X and Y separated by a space.\n";
-    std::cout << "\n";
-    std::cout << YELLOW << "Notes:\n" << RESET;
-    std::cout << "  - Variable number is fixed at the start. Use !CLEAR to reset.\n";
-    std::cout << "  - Commands are case-insensitive.\n";
-    std::cout << "  - Numbers can include signs (+/-) and decimal points.\n";
-    if(!isFirstTime) std::cout << CYAN << "======================================================================\n" << RESET;
-}

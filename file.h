@@ -91,8 +91,8 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
                 }
             }
             catch(const std::invalid_argument& e){
-                std::cout << Output::Error("Wrong input at line " + std::to_string(line)) << "\n";
-                std::cout << Output::Error(e.what()) << "\n";
+                Output::Error(std::string("Wrong input at line ") + std::to_string(line) + Output::NEWLINE);
+                Output::Error(std::string(e.what()) + Output::NEWLINE);
             }
             line++;
         }
@@ -101,7 +101,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
 }
 
 bool CheckOverWrite(){
-    std::cout << Output::Prompt("Do you want ot overwrite current data? (Enter[y/n]) : ");
+    Output::Prompt("Do you want ot overwrite current data? (Enter[y/n]) : ");
     std::string s;
     while(true){
         try{
@@ -119,7 +119,7 @@ bool CheckOverWrite(){
             }
         }
         catch(const std::exception& e){
-            std::cout << Output::Error(e.what());
+            Output::Error(std::string(e.what()));
         }
     }
     

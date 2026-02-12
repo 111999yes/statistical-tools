@@ -215,7 +215,7 @@ private:
 
 void SetUpVariable(Data& data){
     int num;
-    std::cout << Output::Prompt("Please enter the number of variables : ");
+    Output::Prompt("Please enter the number of variables : ");
     while(true){
         try{
             if(!(std::cin >> num)){
@@ -225,12 +225,12 @@ void SetUpVariable(Data& data){
             }
             data.clear();
             data.SetNumberOfVariable(num);
-            std::cout << Output::Success("Set up successfully") << "\n";
+            Output::Success(std::string("Set up successfully") + Output::NEWLINE);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
         catch(const std::exception& e){
-            std::cout << Output::Error(e.what()) << ", please retry : ";
+            Output::Error(std::string(e.what()) + std::string(", please retry : "));
         }
     }
 }

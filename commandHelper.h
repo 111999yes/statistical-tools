@@ -7,47 +7,44 @@
 #include "history.h"
 #include "message.h"
 
-const std::string SEPERATELINE = "======================================================================";
-inline void PrintSeperateLine(){
-    std::cout << ORANGE << "\n" << SEPERATELINE << "\n\n" << RESET;
-}
+
 
 namespace COMMAND_HELPER{
 
     void HandleHelp(){
-        PrintHelp(0);
+        Output::PrintHelp(0);
     }
 
     void HandleExit(){
-        std::cout << Output::Success("Exit successfully!") << "\n";
+        Output::Success(std::string("Exit successfully!") + Output::NEWLINE);
     }
 
     void HandleClear(Data& data){
         data.clear();
-        std::cout << Output::Success("Clear successfully") << "\n";
+        Output::Success(std::string("Clear successfully") + Output::NEWLINE);
         SetUpVariable(data);
     }
 
     void HandlePrint_AllData(Data& data){
         data.CalStatis();
-        PrintSeperateLine();
+        Output::SeperateLine();
         data.PrintRawData();
         data.PrintStaData();
-        PrintSeperateLine();
+        Output::SeperateLine();
     }
 
     void HandlePrint_RawData(Data& data){
         data.CalStatis();
-        PrintSeperateLine();
+        Output::SeperateLine();
         data.PrintRawData();
-        PrintSeperateLine();
+        Output::SeperateLine();
     }
 
     void HandlePrint_StaData(Data& data){
         data.CalStatis();
-        PrintSeperateLine();
+        Output::SeperateLine();
         data.PrintStaData();
-        PrintSeperateLine();
+        Output::SeperateLine();
     }
 
     void HandlePrint_Line(Data& data){
@@ -76,7 +73,7 @@ namespace COMMAND_HELPER{
         data.AddData(seperated, cmdResult.cmd);
         record += " : ";
         record += cmdResult.args[0];
-        std::cout << Output::Success("Adding " + std::string(CYAN) + DoubleToString(std::stod(seperated.first)) + std::string(RESET) + " into data successfully") << "\n";
+        Output::Success(std::string("Adding ") + std::string(CYAN) + DoubleToString(std::stod(seperated.first)) + std::string(RESET) + std::string(" into data successfully") + Output::NEWLINE);
     }
 
     void HandleAdd_TwoNumber(Data& data, std::string& record, const CommandResult& cmdResult){
@@ -89,50 +86,50 @@ namespace COMMAND_HELPER{
         record += ", ";
         record += cmdResult.args[1];
         record += "}";
-        std::cout << Output::Success("Adding {" + std::string(CYAN) + DoubleToString(std::stod(seperated.first)) + std::string(RESET) + ", " + std::string(CYAN) + DoubleToString(std::stod(seperated.second)) + std::string(RESET) + "} into data successfully") << "\n";
+        Output::Success(std::string("Adding {") + std::string(CYAN) + DoubleToString(std::stod(seperated.first)) + std::string(RESET) + std::string(", ") + std::string(CYAN) + DoubleToString(std::stod(seperated.second)) + std::string(RESET) + std::string("} into data successfully") + Output::NEWLINE);
     }
 
     void HandleWriteIn(Data& data, std::string& record){
         std::string fileName;
-        std::cout << Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
+        Output::Prompt(std::string("Please enter the file name(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         std::cin >> fileName;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::string temp = fileName;
         AllCaps(temp);
         RemoveSpace(temp);
         if(temp == "!CANCLE"){
-            std::cout << Output::Prompt("File loading cancled") << "\n";
+            Output::Prompt(std::string("File loading cancled") + Output::NEWLINE);
             return;
         }
         WriteIn(fileName, data, false);
         record += " : ";
         record += fileName;
-        std::cout << Output::Success("File \"" + fileName + "\" loaded successfully") << "\n";
+        Output::Success(std::string("File \"") + fileName + std::string("\" loaded successfully") + Output::NEWLINE);
     }
 
     void HandleWriteOut(Data& data, std::string& record){
         std::string fileName;
-        std::cout << Output::Prompt("Please enter the file name : ");
+        Output::Prompt(std::string("Please enter the file name : "));
         std::cin >> fileName;
         data.CalStatis();
         WriteOut(fileName, data);
         record += " : ";
         record += fileName;
-        std::cout << Output::Success("File \"" + fileName + "\" save successfully") << "\n";
+        Output::Success(std::string("File \"") + fileName + std::string("\" save successfully") + Output::NEWLINE);
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     void HandleRemove(Data& data, std::string& record){
         std::string inputIndex;
         data.PrintColRwaData();
-        std::cout << Output::Prompt("Please enter the index of the data you want to remove(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
+        Output::Prompt(std::string("Please enter the index of the data you want to remove(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         while(true){
             std::getline(std::cin, inputIndex);
             std::string temp = inputIndex;
             AllCaps(temp);
             RemoveSpace(temp);
             if(temp == "!CANCLE"){
-                std::cout << Output::Prompt("Data Removing cancled") << "\n";
+                Output::Prompt(std::string("Data Removing cancled") + Output::NEWLINE);
                 break;
             }
             RemoveSpace(inputIndex);
@@ -162,14 +159,15 @@ namespace COMMAND_HELPER{
                 break;
             }
             catch(const std::invalid_argument& e){
-                std::cout << Output::Error(std::string(e.what()) + ", please retr" + "(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
+                Output::Error(std::string(e.what()) + std::string(", please retry (Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
             }
         }
     }
 
     void HandleHistory(const History& history){
-        PrintSeperateLine();
-        std::cout << history << std::endl;
-        PrintSeperateLine();
+        Output::SeperateLine();
+        Output::History(history);
+        Output::NewLine();
+        Output::SeperateLine();
     }
 }
