@@ -9,7 +9,6 @@
 #include "message.h"
 
 bool CheckOverWrite();
-void init();
 
 void WriteOut(const std::string& fileName, const Data& data){
     std::ofstream StaFile;

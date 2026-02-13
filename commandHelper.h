@@ -7,7 +7,7 @@
 #include "history.h"
 #include "message.h"
 
-
+void SetUpVariable(Data& data);
 
 namespace COMMAND_HELPER{
 
@@ -28,43 +28,52 @@ namespace COMMAND_HELPER{
     void HandlePrint_AllData(Data& data){
         data.CalStatis();
         Output::SeperateLine();
-        data.PrintRawData();
-        data.PrintStaData();
+        Output::RawData(data);
+        Output::NewLine();
+        Output::NewLine();
+        Output::StaData(data);
+        Output::NewLine();
         Output::SeperateLine();
     }
 
     void HandlePrint_RawData(Data& data){
         data.CalStatis();
         Output::SeperateLine();
-        data.PrintRawData();
+        Output::RawData(data);
+        Output::NewLine();
         Output::SeperateLine();
     }
 
     void HandlePrint_StaData(Data& data){
         data.CalStatis();
         Output::SeperateLine();
-        data.PrintStaData();
+        Output::StaData(data);
+        Output::NewLine();
         Output::SeperateLine();
     }
 
     void HandlePrint_Line(Data& data){
         data.CalStatis();
-        data.PrintLine();
+        Output::Line(data);
+        Output::NewLine();
     }
 
     void HandlePrint_R2(Data& data){
         data.CalStatis();
-        data.PrintR2();
+        Output::R2(data);
+        Output::NewLine();
     }
 
     void HandlePrint_RSS(Data& data){
         data.CalStatis();
-        data.PrintRSS();
+        Output::RSS(data);
+        Output::NewLine();
     }
 
     void HandlePrint_RMSE(Data& data){
         data.CalStatis();
-        data.PrintRMSE();
+        Output::RMSE(data);
+        Output::NewLine();
     }
 
     void HandleAdd_OneNumber(Data& data, std::string& record, const CommandResult& cmdResult){
@@ -121,7 +130,7 @@ namespace COMMAND_HELPER{
 
     void HandleRemove(Data& data, std::string& record){
         std::string inputIndex;
-        data.PrintColRwaData();
+        Output::ColRawData(data);
         Output::Prompt(std::string("Please enter the index of the data you want to remove(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         while(true){
             std::getline(std::cin, inputIndex);
@@ -169,5 +178,27 @@ namespace COMMAND_HELPER{
         Output::History(history);
         Output::NewLine();
         Output::SeperateLine();
+    }
+}
+
+void SetUpVariable(Data& data){
+    int num;
+    Output::Prompt("Please enter the number of variables : ");
+    while(true){
+        try{
+            if(!(std::cin >> num)){
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw std::invalid_argument("Invalid input number");
+            }
+            data.clear();
+            data.SetNumberOfVariable(num);
+            Output::Success(std::string("Set up successfully") + Output::NEWLINE);
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            break;
+        }
+        catch(const std::exception& e){
+            Output::Error(std::string(e.what()) + std::string(", please retry : "));
+        }
     }
 }

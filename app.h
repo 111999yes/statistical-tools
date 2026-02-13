@@ -3,7 +3,7 @@
 #include "execute.h"
 
 void StartApp(Data& data){
-    init();
+    Output::Introduction();
     Output::Prompt("Do you want to load file? (Enter[y/n]) : ");
     while(true){
         std::string s;

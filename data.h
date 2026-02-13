@@ -4,7 +4,6 @@
 
 #include "statisticsData.h"
 #include "type.h"
-#include "message.h"
 
 
 class Data{
@@ -65,50 +64,52 @@ public:
         statis.reLine = RegressionLine(oriDataX, oriDataY);
     }
 
-    void PrintStaData() const {
-        std::cout << statis << std::endl;
+    const StaData& GetStaData() const {
+        return statis;
     }
 
-    void PrintRawData() const {
-        std::cout << *this << std::endl;
+    const Data& GetRawData() const {
+        return *this;
     }
 
-    void PrintLine() const {
+    const Line& GetLine() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << CYAN << "Regression line : " << statis.reLine << RESET << std::endl;
+        return statis.reLine;
     }
 
-    void PrintR2() const {
+    const double& GetR2() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << CYAN << "R^2 = "<< statis.RSquare << RESET << std::endl;
+        return statis.RSquare;
     }
 
-    void PrintRSS() const {
+    const double& GetRSS() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << CYAN << "RSS = " << statis.RSS << RESET << std::endl;
+        return statis.RSS;
     }
 
-    void PrintRMSE() const {
+    const double& GetRMSE() const {
         if(numberOfVariable != 2) throw std::invalid_argument("Can't do that with one variable");
-        std::cout << CYAN << "RMSE = "<< statis.RMSE << RESET << std::endl;
+        return statis.RMSE;
     }
 
-    void PrintColRwaData() const {
+    std::stringstream GetColRwaData() const {
+        std::stringstream ss;
         if(numberOfVariable == 1){
             for(size_t i = 0; i < oriDataX.size(); ++i){
-                std::cout << "    " << (i + 1) << ". " << oriDataX[i] << "\n";
+                ss << "    " << (i + 1) << ". " << oriDataX[i] << "\n";
             }
         }
         else if(numberOfVariable == 2){
             if(oriDataX.size() != oriDataY.size())
                 throw std::runtime_error("Vector size mismatch");
             for(size_t i = 0; i < oriDataX.size(); ++i){
-                std::cout << "    " << (i + 1) << ". {" << oriDataX[i] << ", " << oriDataY[i] << "}" << "\n";
+                ss << "    " << (i + 1) << ". {" << oriDataX[i] << ", " << oriDataY[i] << "}" << "\n";
             }
         }
         else{
             throw std::logic_error("Invalid number of variables");
         }
+        return ss;
     }
 
     std::pair<double, double> GetData(const int index) const {
@@ -201,7 +202,7 @@ public:
             if(d.oriDataX.size() != 0) os << "\b\b";
             os << " ]";
         }
-        else throw std::logic_error("numberOfVariable not set");
+        else throw std::logic_error("Invalid number of variables");
         return os;
     }
 
@@ -212,25 +213,3 @@ private:
     StaData statis;
 
 };
-
-void SetUpVariable(Data& data){
-    int num;
-    Output::Prompt("Please enter the number of variables : ");
-    while(true){
-        try{
-            if(!(std::cin >> num)){
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                throw std::invalid_argument("Invalid input number");
-            }
-            data.clear();
-            data.SetNumberOfVariable(num);
-            Output::Success(std::string("Set up successfully") + Output::NEWLINE);
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            break;
-        }
-        catch(const std::exception& e){
-            Output::Error(std::string(e.what()) + std::string(", please retry : "));
-        }
-    }
-}

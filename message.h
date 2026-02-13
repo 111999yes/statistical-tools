@@ -3,6 +3,8 @@
 #include <sstream>
 
 #include "type.h"
+#include "history.h"
+#include "data.h"
 
 class Output{
 public:
@@ -46,6 +48,43 @@ public:
 
     static void History(const History& history){
         std::cout << history;
+    }
+
+    static void StaData(const Data& data){
+        std::cout << data.GetStaData();
+    }
+
+    static void RawData(const Data& data){
+        std::cout << data;
+    }
+
+    static void Line(const Data& data){
+        std::stringstream ss;
+        ss << "Regression line : " << data.GetLine();
+        Info(ss.str());
+    }
+
+    static void R2(const Data& data){
+        std::stringstream ss;
+        ss << "R^2 = "<< data.GetR2();
+        Info(ss.str());
+    }
+
+    static void RSS(const Data& data){
+        std::stringstream ss;
+        ss << "RSS = " << data.GetRSS();
+        Info(ss.str());
+    }
+
+    static void RMSE(const Data& data){
+        std::stringstream ss;
+        ss << "RMSE = "<< data.GetRMSE();
+        Info(ss.str());
+    }
+
+    static void ColRawData(const Data& data){
+        std::stringstream ss = data.GetColRwaData();
+        std::cout << ss.str();
     }
 
     static void NewLine(){
