@@ -130,6 +130,7 @@ namespace COMMAND_HELPER{
 
     void HandleRemove(Data& data, std::string& record){
         std::string inputIndex;
+        if(data.Empty()) throw std::invalid_argument("No data to remove");
         Output::ColRawData(data);
         Output::Prompt(std::string("Please enter the index of the data you want to remove(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         while(true){

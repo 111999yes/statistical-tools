@@ -37,7 +37,7 @@ public:
     static void Error(const std::string& s){
         std::stringstream ss;
         ss << RED << "[Error] " << RESET << s;
-        std::cout << ss.str();
+        std::cerr << ss.str();
     }
 
     static void Prompt(const std::string& s){

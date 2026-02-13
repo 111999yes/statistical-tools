@@ -63,13 +63,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
         history.AddHistory(record);
     }
     //TODO
-    catch(const std::invalid_argument& e){
-        std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
-    }
-    catch(const std::runtime_error& e){
-        std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
-    }
-    catch(const std::logic_error& e){
-        std::cerr << RED << "Error executing (" << BLUE << GetCommandString(cmdResult.cmd) << RED << ") : " << e.what() << RESET << std::endl;
+    catch(const std::exception& e){
+        Output::Error(std::string("Error executing (") + std::string(BLUE) + GetCommandString(cmdResult.cmd) + std::string(RESET) + std::string(") : ") + std::string(e.what()) + Output::NEWLINE);
     }
 }

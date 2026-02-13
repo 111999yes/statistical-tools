@@ -148,6 +148,10 @@ public:
         }
     }
 
+    bool Empty(){
+        return (oriDataX.empty() || oriDataY.empty());
+    }
+
     void RemoveData(const int index){
         if(numberOfVariable == 1){
             if(index < 0 || static_cast<size_t>(index) >= oriDataX.size())
