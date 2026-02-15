@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/eason/C++linux/physics/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/eason/C++linux/physics/build/statistical_tools_gui_autogen/include -I/home/eason/C++linux/physics/core -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -std=gnu++17 -fPIC -o CMakeFiles/statistical_tools_gui.dir/statistical_tools_gui_autogen/mocs_compilation.cpp.o -c /home/eason/C++linux/physics/build/statistical_tools_gui_autogen/mocs_compilation.cpp",
+  "file": "/home/eason/C++linux/physics/build/statistical_tools_gui_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/statistical_tools_gui.dir/statistical_tools_gui_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/eason/C++linux/physics/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/eason/C++linux/physics/build/statistical_tools_gui_autogen/include -I/home/eason/C++linux/physics/core -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -std=gnu++17 -fPIC -o CMakeFiles/statistical_tools_gui.dir/main.cpp.o -c /home/eason/C++linux/physics/main.cpp",
+  "file": "/home/eason/C++linux/physics/main.cpp",
+  "output": "CMakeFiles/statistical_tools_gui.dir/main.cpp.o"
+}
+]

@@ -1,12 +1,13 @@
-#include <iostream>
+#include <QApplication>
+#include <QPushButton>
 
-#include "app.h"
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
 
-int main(){
-    Data data;
-    History history;
-    StartApp(data);
-    RunApp(data, history);
-    EndApp(data);
-    return 0;
+    QPushButton btn("Qt is working!");
+    btn.resize(300,100);
+    btn.show();
+
+    return app.exec();
 }
