@@ -104,7 +104,7 @@ bool CheckOverWrite(){
     std::string s;
     while(true){
         try{
-            getline(std::cin, s);
+            Input::GetLine(s);
             AllCaps(s);
             RemoveSpace(s);
             if(s == "Y" || s == "YES"){

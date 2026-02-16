@@ -21,11 +21,31 @@ inline void RemoveFrontSpace(std::string& s){
     
 }
 
+inline void RemoveBackSpace(std::string& s){
+    size_t pos = s.find_last_not_of(" \n\t\r");
+    if(pos == std::string::npos) s.clear();
+    else s.erase(pos + 1);
+}
+
+inline void Trim(std::string& s){
+    RemoveFrontSpace(s);
+    RemoveBackSpace(s);
+}
+
 inline void RemoveFrontNonNumber(std::string& s){
     size_t pos = s.find_first_of(".0123456789");
     if(pos == std::string::npos) s.clear();
     else s.erase(0, pos);
     
+}
+
+int GetInt(const std::string& s){
+    size_t pos;
+    int num = std::stoi(s, &pos);
+    
+    if(pos != s.size()) throw std::invalid_argument("Invalid input number");
+    
+    return num;
 }
 
 inline bool IsNumber(const std::string& s){

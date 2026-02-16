@@ -101,8 +101,8 @@ namespace COMMAND_HELPER{
     void HandleWriteIn(Data& data, std::string& record){
         std::string fileName;
         Output::Prompt(std::string("Please enter the file name(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
-        std::cin >> fileName;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        Input::GetLine(fileName);
+        Input::Ignore();
         std::string temp = fileName;
         AllCaps(temp);
         RemoveSpace(temp);
@@ -119,13 +119,13 @@ namespace COMMAND_HELPER{
     void HandleWriteOut(Data& data, std::string& record){
         std::string fileName;
         Output::Prompt(std::string("Please enter the file name : "));
-        std::cin >> fileName;
+        Input::GetLine(fileName);
         data.CalStatis();
         WriteOut(fileName, data);
         record += " : ";
         record += fileName;
         Output::Success(std::string("File \"") + fileName + std::string("\" save successfully") + Output::NEWLINE);
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        Input::Ignore();
     }
 
     void HandleRemove(Data& data, std::string& record){
@@ -134,7 +134,7 @@ namespace COMMAND_HELPER{
         Output::ColRawData(data);
         Output::Prompt(std::string("Please enter the index of the data you want to remove(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         while(true){
-            std::getline(std::cin, inputIndex);
+            Input::GetLine(inputIndex);
             std::string temp = inputIndex;
             AllCaps(temp);
             RemoveSpace(temp);
@@ -149,8 +149,7 @@ namespace COMMAND_HELPER{
                 if(ec != std::errc() || ptr != inputIndex.data() + inputIndex.size()){
                     throw std::invalid_argument("Invalid integer");
                 }
-                index -= 1;
-                std::pair<double, double> removedData = data.GetData(index);
+                std::pair<double, double> removedData = data.GetData(index - 1);
                 data.RemoveData(index);
                 record += " : ";
                 if(std::isnan(removedData.second)){
@@ -164,7 +163,7 @@ namespace COMMAND_HELPER{
                     record += "}";
                 }
                 record += " (index : ";
-                record += std::to_string(index + 1);
+                record += std::to_string(index);
                 record += ")";
                 break;
             }
@@ -183,19 +182,24 @@ namespace COMMAND_HELPER{
 }
 
 void SetUpVariable(Data& data){
+    std::string input;
     int num;
     Output::Prompt("Please enter the number of variables : ");
     while(true){
         try{
-            if(!(std::cin >> num)){
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                throw std::invalid_argument("Invalid input number");
+            if(!Input::GetLine(input)){
+                throw std::invalid_argument("Input stream error");
             }
+            
+            Trim(input);
+            if(input.empty()) throw std::invalid_argument("Empty input");
+
+            num = GetInt(input);
+
             data.clear();
             data.SetNumberOfVariable(num);
+
             Output::Success(std::string("Set up successfully") + Output::NEWLINE);
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
         catch(const std::exception& e){
