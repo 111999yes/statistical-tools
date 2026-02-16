@@ -8,7 +8,7 @@ void StartApp(Data& data){
     while(true){
         std::string s;
         bool isCancle = false;
-        std::getline(std::cin, s);
+        Input::GetLine(s);
         AllCaps(s);
         RemoveSpace(s);
         try{
@@ -16,7 +16,7 @@ void StartApp(Data& data){
                 while(true){
                     std::string fileName;
                     Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
-                    std::getline(std::cin, fileName);
+                    Input::GetLine(s);
                     std::string temp = fileName;
                     AllCaps(temp);
                     RemoveSpace(temp);
@@ -54,14 +54,14 @@ void EndApp(Data& data){
     while(true){
         try{
             std::string s;
-            std::getline(std::cin, s);
+            Input::GetLine(s);
             AllCaps(s);
             RemoveSpace(s);
             if(s == "Y" || s == "YES"){
                 data.CalStatis();
                 std::string fileName;
                 Output::Prompt("Please enter the file name : ");
-                std::getline(std::cin, fileName);
+                Input::GetLine(fileName);
                 try{
                     WriteOut(fileName, data);
                     Output::Success(std::string("File save successfully") + Output::NEWLINE);
@@ -89,8 +89,7 @@ void RunApp(Data& data, History& history){
     std::string input;
     while(true){
         Output::Input();
-        std::getline(std::cin, input);
-
+        Input::GetLine(input);
         CommandResult result = Parser(input);
         Execute(result, data, history);
         

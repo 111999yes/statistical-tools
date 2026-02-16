@@ -62,7 +62,6 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
         }
         history.AddHistory(record);
     }
-    //TODO
     catch(const std::exception& e){
         Output::Error(std::string("Error executing (") + std::string(BLUE) + GetCommandString(cmdResult.cmd) + std::string(RESET) + std::string(") : ") + std::string(e.what()) + Output::NEWLINE);
     }

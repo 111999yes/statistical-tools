@@ -132,11 +132,8 @@ public:
 class Input{
 public:
 
-    static void Ignore(){
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-
     static bool GetLine(std::string& s){
         return static_cast<bool>(std::getline(std::cin, s));
     }
+
 };

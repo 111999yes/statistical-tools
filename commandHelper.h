@@ -102,7 +102,6 @@ namespace COMMAND_HELPER{
         std::string fileName;
         Output::Prompt(std::string("Please enter the file name(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         Input::GetLine(fileName);
-        Input::Ignore();
         std::string temp = fileName;
         AllCaps(temp);
         RemoveSpace(temp);
@@ -125,7 +124,6 @@ namespace COMMAND_HELPER{
         record += " : ";
         record += fileName;
         Output::Success(std::string("File \"") + fileName + std::string("\" save successfully") + Output::NEWLINE);
-        Input::Ignore();
     }
 
     void HandleRemove(Data& data, std::string& record){
