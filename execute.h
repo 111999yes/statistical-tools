@@ -55,7 +55,7 @@ void Execute(const CommandResult& cmdResult, Data& data, History& history){
                 COMMAND_HELPER::HandleHistory(history);
                 break;
             case COMMAND::UNDEFINED:
-                throw std::invalid_argument("Invalid command, please try again!(Enter !" + std::string(PURPLE) + "help" + std::string(RED) + " for help)");
+                throw std::invalid_argument("Invalid command, please try again!(Enter !" + std::string(PURPLE) + "help" + std::string(RESET) + " for help)");
                 break;
             default:
                 break;

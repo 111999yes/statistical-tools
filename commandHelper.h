@@ -101,29 +101,46 @@ namespace COMMAND_HELPER{
     void HandleWriteIn(Data& data, std::string& record){
         std::string fileName;
         Output::Prompt(std::string("Please enter the file name(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
-        Input::GetLine(fileName);
-        std::string temp = fileName;
-        AllCaps(temp);
-        RemoveSpace(temp);
-        if(temp == "!CANCLE"){
-            Output::Prompt(std::string("File loading cancled") + Output::NEWLINE);
-            return;
+        while(true){
+            try{
+                Input::GetLine(fileName);
+                if(IsCancle(fileName)){
+                    Output::Prompt(std::string("Write in is cancled") + Output::NEWLINE);
+                    return;
+                }
+                WriteIn(fileName, data, false);
+                record += " : ";
+                record += fileName;
+                Output::Success(std::string("File \"") + fileName + std::string("\" loaded successfully") + Output::NEWLINE);
+                break;
+            }
+            catch(const std::runtime_error& e){
+                Output::Error(std::string(e.what()) + std::string(", please retry(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cnacle) : "));
+            }
         }
-        WriteIn(fileName, data, false);
-        record += " : ";
-        record += fileName;
-        Output::Success(std::string("File \"") + fileName + std::string("\" loaded successfully") + Output::NEWLINE);
     }
 
     void HandleWriteOut(Data& data, std::string& record){
         std::string fileName;
         Output::Prompt(std::string("Please enter the file name : "));
-        Input::GetLine(fileName);
-        data.CalStatis();
-        WriteOut(fileName, data);
-        record += " : ";
-        record += fileName;
-        Output::Success(std::string("File \"") + fileName + std::string("\" save successfully") + Output::NEWLINE);
+        while(true){
+            try{
+                Input::GetLine(fileName);
+                if(IsCancle(fileName)){
+                    Output::Prompt(std::string("Write out is cancled") + Output::NEWLINE);
+                    return;
+                }
+                data.CalStatis();
+                WriteOut(fileName, data);
+                record += " : ";
+                record += fileName;
+                Output::Success(std::string("File \"") + fileName + std::string("\" save successfully") + Output::NEWLINE);
+                break;
+            }
+            catch(const std::runtime_error& e){
+                Output::Error(std::string(e.what()) + std::string(", please retry(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cnacle) : "));
+            }
+        }
     }
 
     void HandleRemove(Data& data, std::string& record){
@@ -133,11 +150,8 @@ namespace COMMAND_HELPER{
         Output::Prompt(std::string("Please enter the index of the data you want to remove(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cancle) : "));
         while(true){
             Input::GetLine(inputIndex);
-            std::string temp = inputIndex;
-            AllCaps(temp);
-            RemoveSpace(temp);
-            if(temp == "!CANCLE"){
-                Output::Prompt(std::string("Data Removing cancled") + Output::NEWLINE);
+            if(IsCancle(inputIndex)){
+                Output::Prompt(std::string("Data removing cancled") + Output::NEWLINE);
                 break;
             }
             RemoveSpace(inputIndex);

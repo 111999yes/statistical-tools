@@ -55,6 +55,13 @@ inline bool IsNumber(const std::string& s){
     return endPtr == s.c_str() + s.size();
 }
 
+bool IsCancle(std::string temp){
+    AllCaps(temp);
+    RemoveSpace(temp);
+    if(temp == "!CANCLE") return true;
+    return false;
+}
+
 std::pair<std::string, std::string> SeperateString(const std::string& s){
     bool hasNumAppear = false;
     bool hasSpaAppear = false;

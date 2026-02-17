@@ -17,7 +17,7 @@ void WriteOut(const std::string& fileName, const Data& data){
         throw std::runtime_error("Can not open file");
     }
     StaFile << data.WriteOutRawData().str();
-    
+
     StaFile << "\n===================================\n\n";
 
     StaFile << data.WriteOutStaData().str();

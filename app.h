@@ -13,14 +13,11 @@ void StartApp(Data& data){
         RemoveSpace(s);
         try{
             if(s == "Y" || s == "YES"){
+                std::string fileName;
+                Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
                 while(true){
-                    std::string fileName;
-                    Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
-                    Input::GetLine(s);
-                    std::string temp = fileName;
-                    AllCaps(temp);
-                    RemoveSpace(temp);
-                    if(temp == "!CANCLE"){
+                    Input::GetLine(fileName);
+                    if(IsCancle(fileName)){
                         isCancle = true;
                         break;
                     }
@@ -30,7 +27,7 @@ void StartApp(Data& data){
                         break;
                     }
                     catch(const std::runtime_error& e){
-                        Output::Error(std::string(e.what()) + Output::NEWLINE);
+                        Output::Error(std::string(e.what()) + std::string(", please retry(Enter !") + std::string(PURPLE) + std::string("CANCLE") + std::string(RESET) + std::string(" to cnacle) : "));
                     }
                 }
                 if(!isCancle) break;
@@ -59,25 +56,32 @@ void EndApp(Data& data){
             RemoveSpace(s);
             if(s == "Y" || s == "YES"){
                 data.CalStatis();
+                Output::Prompt("Please enter the file name(Enter !" + std::string(PURPLE) + "CANCLE" + std::string(RESET) + " to cancle) : ");
                 std::string fileName;
-                Output::Prompt("Please enter the file name : ");
-                Input::GetLine(fileName);
-                try{
-                    WriteOut(fileName, data);
-                    Output::Success(std::string("File save successfully") + Output::NEWLINE);
-                    break;
-                }
-                catch(const std::runtime_error& e){
-                    Output::Error(std::string(e.what()) + std::string(", please retry : "));
+                while(true){
+                    try{
+                        Input::GetLine(fileName);
+                        if(IsCancle(fileName)){
+                            Output::Prompt(std::string("Write out is cancled") + Output::NEWLINE);
+                            break;
+                        }
+                        WriteOut(fileName, data);
+                        Output::Success(std::string("File save successfully") + Output::NEWLINE);
+                        Output::Prompt(std::string("Bye!") + Output::NEWLINE);
+                        break;
+                    }
+                    catch(const std::runtime_error& e){
+                        Output::Error(std::string(e.what()) + std::string(", please retry : "));
+                    }
                 }
             }
             else if(s == "N" || s == "NO"){
                 Output::Prompt(std::string("Bye!") + Output::NEWLINE);
-                break;
             }
             else{
                 throw std::invalid_argument("Invalid command");
             }
+            break;
         }
         catch(const std::exception& e){
             Output::Error(std::string(e.what()) + std::string(", please retry : "));
