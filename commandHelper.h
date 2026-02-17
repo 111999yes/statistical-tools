@@ -162,7 +162,7 @@ namespace COMMAND_HELPER{
                     throw std::invalid_argument("Invalid integer");
                 }
                 std::pair<double, double> removedData = data.GetData(index - 1);
-                data.RemoveData(index);
+                data.RemoveData(index - 1);
                 record += " : ";
                 if(std::isnan(removedData.second)){
                     record += DoubleToString(removedData.first);
