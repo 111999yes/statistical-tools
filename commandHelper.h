@@ -106,6 +106,10 @@ namespace COMMAND_HELPER{
                 Input::GetLine(fileName);
                 if(IsCancle(fileName)){
                     Output::Prompt(std::string("Write in is cancled") + Output::NEWLINE);
+                    record += std::string(" : ");
+                    record += std::string(RED);
+                    record += std::string("cancled");
+                    record += std::string(RESET);
                     return;
                 }
                 WriteIn(fileName, data, false);
@@ -128,6 +132,10 @@ namespace COMMAND_HELPER{
                 Input::GetLine(fileName);
                 if(IsCancle(fileName)){
                     Output::Prompt(std::string("Write out is cancled") + Output::NEWLINE);
+                    record += std::string(" : ");
+                    record += std::string(RED);
+                    record += std::string("cancled");
+                    record += std::string(RESET);
                     return;
                 }
                 data.CalStatis();
@@ -152,6 +160,10 @@ namespace COMMAND_HELPER{
             Input::GetLine(inputIndex);
             if(IsCancle(inputIndex)){
                 Output::Prompt(std::string("Data removing cancled") + Output::NEWLINE);
+                    record += std::string(" : ");
+                    record += std::string(RED);
+                    record += std::string("cancled");
+                    record += std::string(RESET);
                 break;
             }
             RemoveSpace(inputIndex);

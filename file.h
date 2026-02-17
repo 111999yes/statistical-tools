@@ -30,7 +30,6 @@ void WriteOut(const std::string& fileName, const Data& data){
 }
 
 void WriteIn(const std::string& fileName, Data& data, bool isStart){
-    std::string temp = fileName;
     std::ifstream oriDataFile;
     oriDataFile.open(fileName, std::ios::in);
     if(oriDataFile.fail()){
