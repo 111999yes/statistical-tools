@@ -10,10 +10,19 @@ public:
         history.push_back(record);
     }
 
+    bool Empty() const {
+        return history.empty();
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const History& h){
         os << YELLOW << "History :" << RESET << "\n";
-        for(size_t i = 0; i < h.history.size(); ++i){
-            os  << "    " << (i + 1) << ".  " << h.history[i] << ((i == h.history.size() - 1) ? "" : "\n");
+        if(h.Empty()){
+            os << RED << "\n    No command yet" << RESET;
+        }
+        else{
+            for(size_t i = 0; i < h.history.size(); ++i){
+                os  << "    " << (i + 1) << ".  " << h.history[i] << ((i == h.history.size() - 1) ? "" : "\n");
+            }
         }
         return os;
     }
