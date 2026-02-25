@@ -112,7 +112,7 @@ public:
         return ss;
     }
 
-    std::pair<double, double> GetData(const int index) const {
+    std::pair<double, double> GetData(const size_t index) const {
         std::pair<double, double> result;
         if(numberOfVariable == 1){
             if(index < 0 || static_cast<size_t>(index) >= oriDataX.size())
@@ -152,7 +152,7 @@ public:
         return (oriDataX.empty() || oriDataY.empty());
     }
 
-    void RemoveData(const int index){
+    void RemoveData(const size_t index){
         if(numberOfVariable == 1){
             if(index < 0 || static_cast<size_t>(index) >= oriDataX.size())
                 throw std::invalid_argument("Index out of range");

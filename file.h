@@ -63,7 +63,6 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
         int numOfVar = std::stoi(firstLine);
 
         bool isOverwrite = isStart ? true:CheckOverWrite();
-        
 
         if(isOverwrite){
             data.clear();
@@ -95,7 +94,7 @@ void WriteIn(const std::string& fileName, Data& data, bool isStart){
             line++;
         }
     }
-    
+    oriDataFile.close();
 }
 
 bool CheckOverWrite(){
