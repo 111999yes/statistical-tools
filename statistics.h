@@ -47,7 +47,7 @@ double Variance(const std::vector<double>& v){
     double deltaSum = 0.0;
     double avg = Average(v);
     for(size_t i = 0; i < v.size(); ++i) deltaSum += (v[i] - avg) * (v[i] - avg);
-    return deltaSum / (double)v.size();
+    return deltaSum / (double)(v.size() - 1);
 }
 
 double StandardDeviation(const std::vector<double>& v){
@@ -60,7 +60,7 @@ double Covariance(const std::vector<double>& vx, const std::vector<double>& vy){
     double Yavg = Average(vy);
     double deltaSum = 0.0;
     for(size_t i = 0; i < vx.size(); ++i) deltaSum += (vx[i] - Xavg) * (vy[i] - Yavg);
-    return deltaSum / (double)vx.size();
+    return deltaSum / (double)(vx.size() - 1);
 }
 
 double CorrelationCoefficient(const std::vector<double>& vx, const std::vector<double>& vy){

@@ -55,6 +55,8 @@ public:
         statis.Var[1] = Variance(oriDataY);
         statis.SD[0] = sqrt(statis.Var[0]);
         statis.SD[1] = sqrt(statis.Var[1]);
+        statis.SUA[0] = StandardUncertaintyA(oriDataX);
+        statis.SUA[1] = StandardUncertaintyA(oriDataY);
     /*===========================================================*/
         statis.coVar = Covariance(oriDataX, oriDataY);
         statis.relCoef = CorrelationCoefficient(oriDataX, oriDataY);

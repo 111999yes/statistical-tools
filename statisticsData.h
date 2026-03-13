@@ -15,6 +15,7 @@ public:
         std::fill_n(Avg, 2, 0.0);
         std::fill_n(Var, 2, 0.0);
         std::fill_n(SD, 2, 0.0);
+        std::fill_n(SUA, 2, 0.0);
         coVar = 0.0;
         relCoef = 0.0;
         RSS = 0.0;
@@ -32,6 +33,7 @@ public:
             os << "    Average : " << sta.Avg[0] << "\n";
             os << "    Variance : " << sta.Var[0] << "\n";
             os << "    Standard Deviation : " << sta.SD[0];
+            os << "    Type A standard uncertainty : " << sta.SUA[0] <<"\n";
         }
         else{
             os << YELLOW << "Statistics Data:\n" << RESET;
@@ -42,6 +44,7 @@ public:
             os << "    Average : {" << sta.Avg[0] << ", " << sta.Avg[1] << "}\n";
             os << "    Variance : {" << sta.Var[0] << ", " << sta.Var[1] << "}\n";
             os << "    Standard Deviation : {" << sta.SD[0] << ", " << sta.SD[1] << "}\n";
+            os << "    Type A standard uncertainty : {" << sta.SUA[0] << ", " << sta.SUA[1] << "}\n\n";
             os << "    Covariance : " << sta.coVar << "\n";
             os << "    Correlation Coefficient : " << sta.relCoef << "\n";
             os << "    RSS : " << sta.RSS << "\n";
@@ -64,6 +67,7 @@ private:
     double Avg[2];
     double Var[2];
     double SD[2];
+    double SUA[2];
 /*==========================*/
     double coVar;
     double relCoef;
